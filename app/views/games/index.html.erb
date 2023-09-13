@@ -1,0 +1,47 @@
+<h1 align="center">Game Board</h1>
+<div class="game-grid">
+  <table>
+    <thead>
+      <tr>
+        <% @categories.each do |category| %>
+          <th class="header"><%= category %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="game-cell" data-url="/games/1">
+          1 Point (Card 1)
+        </td>
+        <td class="game-cell" data-url="/games/2">
+          1 Point (Card 2)
+        </td>
+        <td class="game-cell" data-url="/games/3">
+          1 Point (Card 3)
+        </td>
+      </tr>
+      <tr>
+        <td class="game-cell" data-url="/games/4">
+          2 Points (Card 4)
+        </td>
+        <td class="game-cell" data-url="/games/5">
+          2 Points (Card 5)
+        </td>
+        <td class="game-cell" data-url="/games/6">
+          2 Points (Card 6)
+        </td>
+      </tr>
+      <tr>
+        <td class="game-cell" data-url="/games/7">
+          3 Points (Card 7)
+        </td>
+        <td class="game-cell" data-url="/games/8">
+          3 Points (Card 8)
+        </td>
+        <td class="game-cell" data-url="/games/9">
+          3 Points (Card 9)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
