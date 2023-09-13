@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2023_09_21_051359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,4 +86,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_051359) do
   add_foreign_key "user_answers", "game_questions"
   add_foreign_key "user_answers", "user_games"
   add_foreign_key "user_games", "games"
+=======
+ActiveRecord::Schema[7.0].define(version: 0) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+>>>>>>> f55c641 (Chore: updates files automatically)
 end
