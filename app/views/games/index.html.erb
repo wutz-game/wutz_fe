@@ -1,6 +1,6 @@
-<h1 align="center">Game Board</h1>
+<h1 align="center">Wutz</h1>
 <div class="game-grid">
-  <table>
+  <table class="table-container">
     <thead>
       <tr>
         <% @categories.each do |category| %>
@@ -9,39 +9,25 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="game-cell" data-url="/games/1">
-          1 Point (Card 1)
-        </td>
-        <td class="game-cell" data-url="/games/2">
-          1 Point (Card 2)
-        </td>
-        <td class="game-cell" data-url="/games/3">
-          1 Point (Card 3)
-        </td>
-      </tr>
-      <tr>
-        <td class="game-cell" data-url="/games/4">
-          2 Points (Card 4)
-        </td>
-        <td class="game-cell" data-url="/games/5">
-          2 Points (Card 5)
-        </td>
-        <td class="game-cell" data-url="/games/6">
-          2 Points (Card 6)
-        </td>
-      </tr>
-      <tr>
-        <td class="game-cell" data-url="/games/7">
-          3 Points (Card 7)
-        </td>
-        <td class="game-cell" data-url="/games/8">
-          3 Points (Card 8)
-        </td>
-        <td class="game-cell" data-url="/games/9">
-          3 Points (Card 9)
-        </td>
-      </tr>
+      <% @questions.each_with_index do |row, row_idx| %>
+        <tr>
+          <% row.each_with_index do |question, col_idx| %>
+            <td class="game-cell" id="cell_<%= row_idx %>_<%= col_idx %>" data-question="<%= question %>">
+              <%= question %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
     </tbody>
   </table>
-</body>
+</div>
+<div id="popup" style="display:none;">
+  <span id="closeBtn" style="cursor:pointer;">X</span>
+  <h2>Question</h2>
+  <p id="question"></p>
+  <form id="myForm">
+    <input type="text" id="myInput" placeholder="Enter text...">
+    <button type="submit">Submit</button>
+  </form>
+  <div id="result"></div>
+</div>
