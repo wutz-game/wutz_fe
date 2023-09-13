@@ -1,6 +1,7 @@
+/* Game Grid Styles */
 .header {
-  width: 100px; /* Adjust the width as needed */
-  height: 20px; /* Adjust the height as needed */
+  width: 100px;
+  height: 20px;
   background-color: #ccc;
   text-align: center;
   font-weight: bold;
@@ -8,20 +9,54 @@
 }
 
 .game-grid {
-  margin: 0 auto; /* Center the div horizontally */
-  display: table; /* Allow the div to behave like a table */
+  margin: 0 auto;
+  display: table;
 }
 
 table {
-  border-collapse: collapse; /* Collapse cell borders into one */
-  width: auto; /* You can adjust the table width as needed */
+  border-collapse: collapse;
+  width: 300px;
+  height: 320px; /* This is the desired height */
 }
 
 table td {
   border: 1px solid #000;
   padding: 5px;
   text-align: center;
-  width: 100px; /* Adjust the width of each cell as needed */
-  height: 100px; /* Adjust the height of each cell as needed */
+  width: 100px;
+  height: 100px;
 }
 
+/* Question Answer Styles */
+.question-answer-controller {
+  width: 300px;
+  height: 370px;
+  margin: 0 auto;
+  background-color: #fff; /* Set the background color as needed */
+  border: 1px solid #000; /* Set the border style as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.box-row {
+  flex: 1;
+  border-bottom: 1px solid #000; /* Optional: Add a border between the rows */
+}
+
+.table-container {
+  width: 300px;
+  height: 370px;
+  border-collapse: collapse;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.table-container tr {
+  height: 50%;
+}
+
+.table-container td {
+  border: 1px solid #000;
+  padding: 5px;
+}

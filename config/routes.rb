@@ -9,5 +9,5 @@ Rails.application.routes.draw do
     resources :user_games, only: [:create]
   end
   root 'welcome#index'
-  resources :games, only: %i[index show]
+  resources :games, only: %i[index show create]
 end
