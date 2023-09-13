@@ -1,48 +1,58 @@
-// When returning to the index page, the links must work again without manually refreshing the page.
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all game cells
+  const gameCells = document.querySelectorAll('.game-cell');
 
+  // Get the popup and its elements
+  const popup = document.getElementById('popup');
+  const closeBtn = document.getElementById('closeBtn');
+  const questionElement = document.getElementById('question');
+  const result = document.getElementById('result');
+  const myForm = document.getElementById('myForm');
+  const myInput = document.getElementById('myInput');
 
-// Function to attach event listeners to game cells
-function attachEventListenersToGameCells() {
-  const gameCells = document.querySelectorAll(".game-cell");
+  let lastClickedCell = null; // To keep track of the last clicked cell
 
-  gameCells.forEach(function (cell) {
-    cell.addEventListener("click", function () {
-      const url = cell.getAttribute("data-url");
-      localStorage.setItem("clickedUrl", url);
-      window.location.href = url;
+  // Close button functionality
+  closeBtn.addEventListener('click', function() {
+    popup.style.display = 'none';
+  });
+
+  // Add click event to each game cell
+  gameCells.forEach(function(cell) {
+    cell.addEventListener('click', function() {
+      const question = cell.getAttribute('data-question');
+
+      // Set question text
+      questionElement.textContent = question;
+
+      // Show popup
+      popup.style.display = 'block';
+
+      // Store the last clicked cell
+      lastClickedCell = cell;
     });
   });
-}
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Attach event listeners when the page initially loads
-  attachEventListenersToGameCells();
+  // Listen for form submission inside popup
+  myForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-  // Check if a URL was previously clicked and restore the clicked state
-  const clickedUrl = localStorage.getItem("clickedUrl");
-  if (clickedUrl) {
-    const clickedCell = document.querySelector(`[data-url="${clickedUrl}"]`);
-    if (clickedCell) {
-      clickedCell.classList.add("clicked");
-    }
-  }
-});
+    // Just an example, your real answer validation will vary
+    const input = myInput.value;
 
-document.addEventListener("submit", function (e) {
-  if (e.target.id === "myForm") {
-    // Remove the clicked class from the cell that was clicked
-    const clickedUrl = localStorage.getItem("clickedUrl");
-    if (clickedUrl) {
-      const clickedCell = document.querySelector(`[data-url="${clickedUrl}"]`);
-      if (clickedCell) {
-        clickedCell.classList.remove("clicked");
+    if (lastClickedCell) { // Check to make sure a cell was clicked
+      if (input.toLowerCase() === 'yes') {
+        lastClickedCell.style.backgroundColor = 'green';
+      } else if (input.toLowerCase() === 'maybe') {
+        lastClickedCell.style.backgroundColor = 'yellow';
+      } else {
+        lastClickedCell.style.backgroundColor = 'red';
       }
     }
 
-    // Remove the clicked URL from local storage
-    localStorage.removeItem("clickedUrl");
-
-    // Re-attach event listeners to game cells
-    attachEventListenersToGameCells();
-  }
+    // Reset input and hide popup
+    myInput.value = '';
+    result.textContent = '';
+    popup.style.display = 'none';
+  });
 });
