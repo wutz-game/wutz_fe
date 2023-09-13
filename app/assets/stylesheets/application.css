@@ -1,15 +1,27 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+.header {
+  width: 100px; /* Adjust the width as needed */
+  height: 20px; /* Adjust the height as needed */
+  background-color: #ccc;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #000;
+}
+
+.game-grid {
+  margin: 0 auto; /* Center the div horizontally */
+  display: table; /* Allow the div to behave like a table */
+}
+
+table {
+  border-collapse: collapse; /* Collapse cell borders into one */
+  width: auto; /* You can adjust the table width as needed */
+}
+
+table td {
+  border: 1px solid #000;
+  padding: 5px;
+  text-align: center;
+  width: 100px; /* Adjust the width of each cell as needed */
+  height: 100px; /* Adjust the height of each cell as needed */
+}
+
