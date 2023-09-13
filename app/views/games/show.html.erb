@@ -1,1 +1,15 @@
-
+<h1 align="center">Game Board</h1>
+<table class="table-container">
+  <tr>
+    <td><%= @question_placeholder %></td>
+  </tr>
+  <tr>
+    <td>
+      <p>Answer:</p>
+      <form id="myForm" action="<%= games_path %>" method="post">
+        <input type="text" id="myInput" class="custom-input" placeholder="Enter text...">
+        <button type="submit" class="custom-button">Submit</button>
+      </form>
+    </td>
+  </tr>
+</table>

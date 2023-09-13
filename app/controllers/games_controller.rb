@@ -7,6 +7,14 @@ class GamesController < ApplicationController
   def show
     game_url = params[:id]
     @game_data = fetch_game_data(game_url)
+    @categories = fetch_categories_from_backend
+    @question_placeholder = 'Question Placeholder' # Replace with your desired placeholder text
+    @answer_placeholder = 'Answer Placeholder' # Replace with your desired placeholder text
+    @submit_placeholder = 'Submit Placeholder' # Replace with your desired placeholder text
+  end
+
+  def create
+    redirect_to games_path
   end
 
   private
