@@ -31,8 +31,9 @@ body {
   display: none;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 31%;
   transform: translate(-50%, -50%);
+  height: 300px;
   width: 300px;
   background-color:#1F2937;
   border: 1px solid black;
@@ -42,5 +43,14 @@ body {
 /* Close button styles */
 #closeBtn {
   float: right;
+  cursor: pointer;
+}
+
+/* Style for Skip Question button */
+#skipBtn {
+  background-color: #E5E7EB;
+  color: #111827;
+  padding: 10px;
+  border: none;
   cursor: pointer;
 }
