@@ -12,8 +12,8 @@
       <% @questions.each_with_index do |row, row_idx| %>
         <tr>
           <% row.each_with_index do |question, col_idx| %>
-            <td class="game-cell" id="cell_<%= row_idx %>_<%= col_idx %>" data-question="<%= question %>">
-              <%= question %>
+            <td class="game-cell" id="cell_<%= row_idx %>_<%= col_idx %>" data-question="<%= @questions[row_idx][col_idx] %>">
+              <%= @points[row_idx][col_idx] %>
             </td>
           <% end %>
         </tr>
@@ -29,5 +29,6 @@
     <input type="text" id="myInput" placeholder="Enter text...">
     <button type="submit">Submit</button>
   </form>
+  <button id="skipBtn">Skip Question</button>
   <div id="result"></div>
 </div>
