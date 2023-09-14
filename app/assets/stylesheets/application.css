@@ -54,3 +54,10 @@ body {
   border: none;
   cursor: pointer;
 }
+
+/* Style for Total Score */
+#totalScore {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
