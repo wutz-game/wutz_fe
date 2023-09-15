@@ -1,7 +1,7 @@
 class GamesService
 
   # Note: This is mocked data, at the moment. This will update when we have an endpoint for the BE. This is the expected return value of a game.
-  def get_todays_game
+  def self.get_todays_game
     {
       "data": {
         "type": "game",
