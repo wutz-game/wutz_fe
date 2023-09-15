@@ -34,12 +34,17 @@ RSpec.describe "Games Facade" do
         #  Q4  |  Q5  |  Q6
         #  Q7  |  Q8  |  Q9
 
-        expect(@games_facade.questions).to be_a Hash
-        expect(@games_facade.questions.length).to eq(9)
-        expect(@games_facade.questions[:q1]).to be_a Question
-        expect(@games_facade.questions[:q2]).to be_a Question
-        expect(@games_facade.questions[:q3]).to be_a Question
-        expect(@games_facade.questions[:q4]).to be_a Question
+        expect(@games_facade.questions).to be_an Array
+        expect(@games_facade.questions.length).to eq(3)
+        
+        first_row = @games_facade.questions.first
+
+        expect(first_row).to be_an Array
+        expect(first_row.length).to eq(3)
+
+        expect(first_row[0]).to be_a Question
+        expect(first_row[1]).to be_a Question
+        expect(first_row[2]).to be_a Question
       end
     end
   end
