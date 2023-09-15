@@ -10,6 +10,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const myForm = document.getElementById('myForm');
   const textInput = document.getElementById('textInput');
 
+  // Get the second popup and its elements
+  const answerPopup = document.getElementById('answerPopup');
+  const answerCloseBtn = document.getElementById('answerCloseBtn');
+  const answerPopupPoints = document.getElementById('answerPopupPoints');
+  const answerPopupQuestion = document.getElementById('answerPopupQuestion');
+  const userResponse = document.getElementById('userResponse');
+  const correctResponse = document.getElementById('correctResponse');
+
+  // Close button functionality for the second popup
+  answerCloseBtn.addEventListener('click', function() {
+    answerPopup.style.display = 'none';
+  });
+
   // Get the Skip button element
   const skipBtn = document.getElementById('skipBtn');
 
@@ -63,19 +76,20 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Listen for form submission inside popup
-  myForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+myForm.addEventListener('submit', function(e) {
+  e.preventDefault();
 
-    const input = textInput.value;
-    const points = parseInt(lastClickedCell.textContent, 10); // Parse points to an integer
+  const input = textInput.value.trim();
+  const points = parseInt(lastClickedCell.textContent, 10); // Parse points to an integer
 
+    // Find the correct answer for the clicked question
+    const row_idx = lastClickedCell.id.split('_')[1];
+    const col_idx = lastClickedCell.id.split('_')[2];
+    const correct_answer = lastClickedCell.getAttribute('data-answer');
     if (lastClickedCell) { // Check to make sure a cell was clicked
-      if (input.toLowerCase() === 'yes') {
+      if (input.toLowerCase() === correct_answer.toLowerCase()) {
         lastClickedCell.style.backgroundColor = 'green';
         totalScore += points; // Add points for correct answer
-      } else if (input.toLowerCase() === 'maybe') {
-        lastClickedCell.style.backgroundColor = '#C2BA71';
-        // No change in score for 'maybe'
       } else {
         lastClickedCell.style.backgroundColor = 'red';
         totalScore -= points; // Subtract points for incorrect answer
@@ -83,9 +97,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Update the displayed score
       updateDisplayedScore();
+
+      // Populate and show the second popup
+      answerPopupPoints.textContent = points;
+      answerPopupQuestion.textContent = questionElement.textContent;
+      userResponse.textContent = input;
+      correctResponse.textContent = correct_answer;
+      answerPopup.style.display = 'block';
     }
 
-    // Reset input and hide popup
+    // Reset input and hide the first popup
     textInput.value = '';
     result.textContent = '';
     popup.style.display = 'none';
