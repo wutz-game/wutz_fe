@@ -12,5 +12,10 @@ class GamesController < ApplicationController
        'What is the speed of light?'],
       ['Who was the first President of the United States?', 'What year did World War II end?', "Who wrote 'Hamlet'?"]
     ]
+    @correct_answers = [
+      ['Paris', 'Asia', 'Nile'],
+      ['H2O', 'Mars', '299,792,458 m/s'],
+      ['George Washington', '1945', 'William Shakespeare']
+    ]
   end
 end
