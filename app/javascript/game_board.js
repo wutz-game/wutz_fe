@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const questionElement = document.getElementById('question');
   const result = document.getElementById('result');
   const myForm = document.getElementById('myForm');
-  const myInput = document.getElementById('myInput');
+  const textInput = document.getElementById('textInput');
 
   // Get the Skip button element
   const skipBtn = document.getElementById('skipBtn');
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Reset the form and hide the popup
-    myInput.value = '';
+    textInput.value = '';
     result.textContent = '';
     popup.style.display = 'none';
   });
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
   myForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const input = myInput.value;
+    const input = textInput.value;
     const points = parseInt(lastClickedCell.textContent, 10); // Parse points to an integer
 
     if (lastClickedCell) { // Check to make sure a cell was clicked
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Reset input and hide popup
-    myInput.value = '';
+    textInput.value = '';
     result.textContent = '';
     popup.style.display = 'none';
   });
