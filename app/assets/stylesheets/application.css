@@ -42,7 +42,7 @@ body {
 
 }
 
-/* Close button styles */
+/* Question Close button styles */
 #closeBtn {
   float: right;
   cursor: pointer;
@@ -155,5 +155,26 @@ body {
   font-style: italic;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+/* Answer Popup Styles */
+#answerPopup {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 31%;
+  transform: translate(-50%, -50%);
+  height: 370px;
+  width: 355px;
+  background-color: #1F2937;
+  border: 1px solid black;
+  z-index: 1000;
+  text-align: center;
+}
+
+/* Answer Close Button Style */
+#answerCloseBtn {
+float: right;
+cursor: pointer;
 }
 
