@@ -76,39 +76,38 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Listen for form submission inside popup
-myForm.addEventListener('submit', function(e) {
-  e.preventDefault();
+  myForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-  const input = textInput.value.trim();
-  const points = parseInt(lastClickedCell.textContent, 10); // Parse points to an integer
+    const input = textInput.value.trim();
+    const pointsText = lastClickedCell.textContent; // Keep it as text, not an integer
+    const points = parseInt(pointsText, 10); // Parse points to an integer for score calculation
 
-    // Find the correct answer for the clicked question
-    const row_idx = lastClickedCell.id.split('_')[1];
-    const col_idx = lastClickedCell.id.split('_')[2];
-    const correct_answer = lastClickedCell.getAttribute('data-answer');
-    if (lastClickedCell) { // Check to make sure a cell was clicked
-      if (input.toLowerCase() === correct_answer.toLowerCase()) {
-        lastClickedCell.style.backgroundColor = 'green';
-        totalScore += points; // Add points for correct answer
-      } else {
-        lastClickedCell.style.backgroundColor = 'red';
-        totalScore -= points; // Subtract points for incorrect answer
-      }
-
-      // Update the displayed score
-      updateDisplayedScore();
-
-      // Populate and show the second popup
-      answerPopupPoints.textContent = points;
-      answerPopupQuestion.textContent = questionElement.textContent;
-      userResponse.textContent = input;
-      correctResponse.textContent = correct_answer;
-      answerPopup.style.display = 'block';
+  // Find the correct answer for the clicked question
+  const correct_answer = lastClickedCell.getAttribute('data-answer');
+  if (lastClickedCell) { // Check to make sure a cell was clicked
+    if (input.toLowerCase() === correct_answer.toLowerCase()) {
+      lastClickedCell.style.backgroundColor = 'green';
+      totalScore += points; // Add points for correct answer
+    } else {
+      lastClickedCell.style.backgroundColor = 'red';
+      totalScore -= points; // Subtract points for incorrect answer
     }
 
-    // Reset input and hide the first popup
-    textInput.value = '';
-    result.textContent = '';
-    popup.style.display = 'none';
-  });
+   // Update the displayed score
+   updateDisplayedScore();
+
+    // Populate and show the second popup
+    answerPopupPoints.textContent = pointsText; // Use the textual description here
+    answerPopupQuestion.textContent = questionElement.textContent;
+    userResponse.textContent = input;
+    correctResponse.textContent = correct_answer;
+    answerPopup.style.display = 'block';
+  }
+
+  // Reset input and hide the first popup
+  textInput.value = '';
+  result.textContent = '';
+  popup.style.display = 'none';
+});
 });
