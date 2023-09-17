@@ -71,6 +71,11 @@ group :test do
   gem "rspec-rails"
   gem "capybara"
   gem "simplecov"
+  gem "selenium-webdriver"
+  gem "webdrivers"
+  gem "vcr"
+  gem "webmock"
+  gem "launchy"
 end
 
 group :development do
