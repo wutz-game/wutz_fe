@@ -76,3 +76,5 @@ group :development do
   # gem "spring"
 end
 
+gem 'bcrypt'
+
