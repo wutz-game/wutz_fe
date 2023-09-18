@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+  let answeredQuestions = {};
+
   function loadGameState() {
     const savedState = JSON.parse(localStorage.getItem('gameState')) || {};
     const savedScore = parseInt(localStorage.getItem('gameScore')) || 0;
+    answeredQuestions = JSON.parse(localStorage.getItem('answeredQuestions')) || {};
 
     // Load saved state
     for (const [cellId, color] of Object.entries(savedState)) {
@@ -18,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     localStorage.setItem('gameState', JSON.stringify(gameState));
     localStorage.setItem('gameScore', totalScore);
+    localStorage.setItem('answeredQuestions', JSON.stringify(answeredQuestions));
   }
 
   // Get all game cells
@@ -25,8 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Load previous game state and score
   let totalScore = loadGameState();
-  const scoreElement = document.getElementById('scoreValue');
-  scoreElement.textContent = totalScore;
 
   // Initial overlay
   const initialPopup = document.getElementById('initialPopup');
@@ -125,50 +127,63 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add click event to each game cell
   gameCells.forEach(function(cell) {
     cell.addEventListener('click', function() {
-      const question = cell.getAttribute('data-question');
-      const points = cell.textContent;
+      const cellId = cell.id;
 
-      // Set question text and points
-      questionElement.textContent = question;
+      if (answeredQuestions[cellId]) {
+        const previousAnswer = answeredQuestions[cellId].userAnswer;
+        const correctAnswer = answeredQuestions[cellId].correctAnswer;
+        const pointsText = answeredQuestions[cellId].points;
 
-      popup.style.display = 'block';
-      lastClickedCell = cell;
-    });
-  });
-
-  // Listen for form submission inside popup
-  myForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const input = textInput.value.trim();
-    const pointsText = lastClickedCell.textContent;
-    const points = parseInt(pointsText, 10);
-    const correct_answer = lastClickedCell.getAttribute('data-answer');
-
-    if (lastClickedCell) {
-      if (input.toLowerCase() === correct_answer.toLowerCase()) {
-        lastClickedCell.style.backgroundColor = 'green';
-        totalScore += points;
+        // Populate and show the second popup
+        answerPopupPoints.textContent = pointsText;
+        answerPopupQuestion.textContent = cell.getAttribute('data-question');
+        userResponse.textContent = previousAnswer;
+        correctResponse.textContent = correctAnswer;
+        answerPopup.style.display = 'block';
       } else {
-        lastClickedCell.style.backgroundColor = 'red';
-        totalScore -= points;
+        const question = cell.getAttribute('data-question');
+        questionElement.textContent = question;
+        popup.style.display = 'block';
+        lastClickedCell = cell;
       }
-      updateDisplayedScore();
+      });
+    });
 
-      // Populate and show the second popup
-      answerPopupPoints.textContent = pointsText;
-      answerPopupQuestion.textContent = questionElement.textContent;
-      userResponse.textContent = input;
-      correctResponse.textContent = correct_answer;
-      answerPopup.style.display = 'block';
-    }
+// Listen for form submission inside popup
+myForm.addEventListener('submit', function(e) {
+  e.preventDefault();
 
-    textInput.value = '';
-    popup.style.display = 'none';
-    saveGameState();
+  const input = textInput.value.trim();
+  const pointsText = lastClickedCell.textContent;
+  const points = parseInt(pointsText, 10);
+  const correct_answer = lastClickedCell.getAttribute('data-answer');
 
-  });
-
-  window.onbeforeunload = function() {
-    saveGameState();
+  // Mark the question as answered
+  answeredQuestions[lastClickedCell.id] = {
+    userAnswer: input,
+    correctAnswer: correct_answer,
+    points: pointsText
   };
+
+  // Populate and show the second popup
+  answerPopupPoints.textContent = pointsText;
+  answerPopupQuestion.textContent = questionElement.textContent;
+  userResponse.textContent = input;
+  correctResponse.textContent = correct_answer;
+
+  answerPopup.style.display = 'block';
+  textInput.value = '';
+  popup.style.display = 'none';
+
+  saveGameState();
+
+  textInput.value = '';
+  popup.style.display = 'none';
+  saveGameState();
 });
+
+window.onbeforeunload = function() {
+  saveGameState();
+};
+});
+
