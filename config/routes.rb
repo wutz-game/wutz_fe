@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  root 'welcome#index'
+  root 'games#index'
   resources :games, only: %i[index create]
 end

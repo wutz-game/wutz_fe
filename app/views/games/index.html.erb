@@ -1,4 +1,30 @@
 <h1 align="center">Wutz</h1>
+<!-- Initial Overlay Popup -->
+<div id="initialPopup" style="display:block;">
+  <h1>Wutz</h1>
+  <h2>A Daily Trivia Game</h2>
+  <div class="button-wrapper">
+    <button class="initialBtn", id="playBtn">Play</button><br>
+    <button class="initialBtn", id="loginBtn">Login</button><br>
+    <button class="initialBtn", id="howToPlayBtn">How to Play</button>
+    <br>
+    <h3>
+      Today's Date:
+      <div id="date"></div>
+    </h3>
+  </div>
+</div>
+<!-- How to Play Overlay Popup -->
+<div id="howToPlayPopup" style="display:none;">
+  <span id="howToPlayCloseBtn" style="cursor:pointer;">X</span>
+  <h2>How to Play</h2>
+  <p>Here are the instructions...</p>
+  <p>Here are the instructions...</p>
+  <p>Here are the instructions...</p>
+  <p>Here are the instructions...</p>
+  <button id="returnBtn">Return</button>
+</div>
+<!-- Game Board Popup -->
 <div class="game-grid">
   <table class="table-container">
     <thead>
@@ -15,8 +41,8 @@
       <% @facade.questions.each_with_index do |question_row, row_index| %>
         <tr>
           <% question_row.each_with_index do |question, col_index| %>
-            <td 
-              class="game-cell" 
+            <td
+              class="game-cell"
               id="cell_<%= row_index %>_<%= col_index %>"
               data-question="<%= question.question %>"
               data-answer="<%= question.answer %>"
@@ -31,6 +57,8 @@
 </div>
 <br>
 <div id="totalScore" align="center">Total Score: <span id="scoreValue">0</span></div>
+<br>
+<button id="submitGameBtn">Submit Game</button>
 <!-- Question Overlay Popup -->
 <div id="popup" style="display:none;">
   <span id="closeBtn" style="cursor:pointer;">X</span>
