@@ -1,12 +1,19 @@
 <h1>Login</h1>
 
+<!-- Flash Error Message -->
+<% if flash[:error].present? %>
+  <div class="alert alert-danger">
+    <%= flash[:error] %>
+  </div>
+<% end %>
+
 <!-- Login Form -->
 <%= form_with url: login_path, method: :post do |form| %>
   <%= form.label :username, "Username:" %>
   <%= form.text_field :username %>
   <%= form.label :password, "Password:" %>
   <%= form.password_field :password %>
-  <%= form.submit "Log In" %>
+  <%= form.submit "Login" %>
 <% end %>
 
 <!-- Link to Create Account -->
