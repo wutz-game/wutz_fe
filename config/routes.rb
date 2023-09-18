@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :challenges, only: [:index]
     resources :user_games, only: [:create]
   end
-  root 'welcome#index'
+
+  root 'games#index'
   resources :games, only: %i[index create]
 end
