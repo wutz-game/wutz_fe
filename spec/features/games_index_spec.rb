@@ -99,7 +99,7 @@ feature 'Games Index Page', js: true do
     game_cell = find('.game-cell', match: :first)
     game_cell.click
 
-    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book', wait: 10)
+    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book')
     click_button 'skipBtn'
 
     # Check that the color of the square became yellow
