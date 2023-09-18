@@ -4,14 +4,18 @@ body {
   color: white;
 }
 
-/* Initial Popup / How to Play Popup */
-#initialPopup, #howToPlayPopup {
+/* All Popups */
+#initialPopup, #howToPlayPopup, #popup, #answerPopup {
+  box-sizing: border-box;
   display: none;
-  position: absolute;
-  left: 41%;
-  top: 8.5%;
-  height: 500px;
-  width: 355px;
+  position: fixed;
+  left: 50vw;
+  top: 50vh;
+  transform: translate(-50%, -50%);
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
   background-color: #1F2937;
   z-index: 9999;
   display: flex;
@@ -20,6 +24,7 @@ body {
   justify-content: center;
   text-align: center;
 }
+
 
 /* Initial Popup Button Wrapper */
 .button-wrapper {
@@ -192,22 +197,6 @@ body {
   cursor: pointer;
 }
 
-/* Popup styles */
-#popup {
-  display: none;
-  position: absolute;
-  left: 50%;
-  top: 31%;
-  transform: translate(-50%, -50%);
-  height: 370px;
-  width: 355px;
-  background-color:#1F2937;
-  border: 1px solid black;
-  z-index: 1000;
-  text-align: center;
-
-}
-
 /* Question Close button styles */
 #closeBtn {
   float: right;
@@ -282,21 +271,6 @@ body {
   font-style: italic;
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
-/* Answer Popup Styles */
-#answerPopup {
-  display: none;
-  position: absolute;
-  left: 50%;
-  top: 31%;
-  transform: translate(-50%, -50%);
-  height: 370px;
-  width: 355px;
-  background-color: #1F2937;
-  border: 1px solid black;
-  z-index: 1000;
-  text-align: center;
 }
 
 /* Submit Response Button Styles */
