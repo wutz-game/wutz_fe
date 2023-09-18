@@ -1,11 +1,12 @@
 <h1 align="center">Wutz</h1>
 <!-- Initial Overlay Popup -->
+<script src="<%= asset_path('login_redirect.js') %>"></script>
 <div id="initialPopup" style="display:block;">
   <h1>Wutz</h1>
   <h2>A Daily Trivia Game</h2>
   <div class="button-wrapper">
     <button class="initialBtn", id="playBtn">Play</button><br>
-    <button class="initialBtn", id="loginBtn">Login</button><br>
+    <button class="initialBtn" id="loginBtn" onclick="redirectToLogin()">Login</button>
     <button class="initialBtn", id="howToPlayBtn">How to Play</button>
     <br>
     <h3>
