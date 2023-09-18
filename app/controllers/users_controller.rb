@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     new_user = User.create(user_params)
     session[:user_id] = new_user.id
     flash[:success] = "Welcome, #{new_user.username}!"
-    redirect_to root_path
+    redirect_to login_path
   end
 
   def login_form
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     if user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.username}!"
-      redirect_to root_path
+      redirect_to game_path
     else
       flash[:error] = "Sorry, your credentials are bad."
       render :login_form
