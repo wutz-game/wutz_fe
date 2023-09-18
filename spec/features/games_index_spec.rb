@@ -1,16 +1,55 @@
 feature 'Games Index Page', js: true do
+  scenario 'shows initial popup on page load and how to play button / popup' do
+    visit games_path
+    expect(page).to have_css('#initialPopup', visible: true)
+
+    within('#initialPopup') do
+      find('#howToPlayBtn').click
+    end
+
+    expect(page).to have_content('How to Play')
+
+    within('#howToPlayPopup') do
+      find('#returnBtn').click
+    end
+
+    expect(page).to have_content('Play')
+    expect(page).to have_content('How to Play')
+    expect(page).to have_content('Login')
+  end
+
+  scenario 'lets user login' do
+    # TO DO: Add test for login
+  end
+
+  scenario 'lets user click play button to start a game' do
+    visit games_path
+
+    within('#initialPopup') do
+      find('#playBtn').click
+    end
+
+    expect(page).to have_content('Total Score: 0')
+  end
+
   scenario 'lets user select a square and answer a question correctly' do
     visit games_path
+
+    within('#initialPopup') do
+      find('#playBtn').click
+    end
+
     game_cell = find('.game-cell', match: :first)
     game_cell.click
 
-    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book', wait: 10)
+    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book')
     fill_in 'textInput', with: 'a putting Green Eggs and Ham'
-    click_button 'Submit'
+    click_button 'Submit Response'
+
     expect(page).to have_content('Your response: a putting Green Eggs and Ham')
     expect(page).to have_content('Correct Response: a putting Green Eggs and Ham')
 
-    expect(page).to have_css('#answerPopup', visible: true, wait: 10)
+    expect(page).to have_css('#answerPopup', visible: true)
     within('#answerPopup') do
       find('#answerCloseBtn').click
     end
@@ -24,16 +63,22 @@ feature 'Games Index Page', js: true do
 
   scenario 'lets user select a square and answer a question incorrectly' do
     visit games_path
+
+    within('#initialPopup') do
+      find('#playBtn').click
+    end
+
     game_cell = find('.game-cell', match: :first)
     game_cell.click
 
-    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book', wait: 10)
+    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book')
     fill_in 'textInput', with: 'Wrong Answer'
-    click_button 'Submit'
+    click_button 'Submit Response'
+
     expect(page).to have_content('Your response: Wrong Answer')
     expect(page).to have_content('Correct Response: a putting Green Eggs and Ham')
 
-    expect(page).to have_css('#answerPopup', visible: true, wait: 10)
+    expect(page).to have_css('#answerPopup', visible: true)
     within('#answerPopup') do
       find('#answerCloseBtn').click
     end
@@ -47,6 +92,10 @@ feature 'Games Index Page', js: true do
 
   scenario 'lets user select a square and click skip question' do
     visit games_path
+
+    within('#initialPopup') do
+      find('#playBtn').click
+    end
     game_cell = find('.game-cell', match: :first)
     game_cell.click
 
