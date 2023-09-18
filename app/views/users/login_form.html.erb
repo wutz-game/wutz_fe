@@ -1,0 +1,13 @@
+<h1>Login</h1>
+
+<!-- Login Form -->
+<%= form_with url: login_path, method: :post do |form| %>
+  <%= form.label :username, "Username:" %>
+  <%= form.text_field :username %>
+  <%= form.label :password, "Password:" %>
+  <%= form.text_field :password %>
+  <%= form.submit "Log In" %>
+<% end %>
+
+<!-- Link to Create Account -->
+<p>Don't have an account? <%= link_to "Create Account", new_user_path %></p>
