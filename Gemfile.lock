@@ -71,6 +71,7 @@ GEM
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     base64 (0.1.1)
+<<<<<<< HEAD
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -84,6 +85,8 @@ GEM
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
 >>>>>>> fe088ba (Install rspec-rails, capybara, and simplecov gems)
+=======
+>>>>>>> f9a35fc (feat: Finish API consumption from be)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -115,6 +118,7 @@ GEM
     diff-lcs (1.5.0)
     docile (1.4.0)
     erubi (1.12.0)
+<<<<<<< HEAD
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -122,11 +126,14 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.1)
       i18n (>= 1.8.11, < 2)
+=======
+>>>>>>> f9a35fc (feat: Finish API consumption from be)
     faraday (2.7.11)
       base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
+<<<<<<< HEAD
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashdiff (1.0.1)
@@ -138,6 +145,8 @@ GEM
     docile (1.4.0)
 >>>>>>> fe088ba (Install rspec-rails, capybara, and simplecov gems)
     erubi (1.12.0)
+=======
+>>>>>>> f9a35fc (feat: Finish API consumption from be)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashdiff (1.0.1)
@@ -277,12 +286,16 @@ GEM
     rspec-support (3.12.1)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     ruby2_keywords (0.0.5)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
 =======
 >>>>>>> fe088ba (Install rspec-rails, capybara, and simplecov gems)
 =======
+=======
+    ruby2_keywords (0.0.5)
+>>>>>>> f9a35fc (feat: Finish API consumption from be)
     rubyzip (2.3.2)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -373,6 +386,7 @@ DEPENDENCIES
   capybara
   debug
 <<<<<<< HEAD
+<<<<<<< HEAD
   factory_bot_rails
   faker
   faraday
@@ -390,6 +404,9 @@ DEPENDENCIES
   whenever
   whenever-test
 =======
+=======
+  faraday
+>>>>>>> f9a35fc (feat: Finish API consumption from be)
   importmap-rails
   jbuilder
   launchy
