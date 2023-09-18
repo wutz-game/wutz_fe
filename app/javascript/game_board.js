@@ -28,7 +28,57 @@ document.addEventListener('DOMContentLoaded', function() {
   const scoreElement = document.getElementById('scoreValue');
   scoreElement.textContent = totalScore;
 
-  // Get the popup and its elements
+  // Initial overlay
+  const initialPopup = document.getElementById('initialPopup');
+  const playBtn = document.getElementById('playBtn');
+  const loginBtn = document.getElementById('loginBtn');
+  const howToPlayBtn = document.getElementById('howToPlayBtn');
+
+  const howToPlayPopup = document.getElementById('howToPlayPopup');
+  const howToPlayCloseBtn = document.getElementById('howToPlayCloseBtn');
+  const returnBtn = document.getElementById('returnBtn');
+
+    // When Play button is clicked, hide initial popup
+    playBtn.addEventListener('click', function() {
+      initialPopup.style.display = 'none';
+    });
+
+    // When Login button is clicked (does nothing for now)
+    loginBtn.addEventListener('click', function() {
+      // Do nothing for now
+    });
+
+    // When How to Play button is clicked, show the How to Play popup
+    howToPlayBtn.addEventListener('click', function() {
+      howToPlayPopup.style.display = 'block';
+    });
+
+    // Close How to Play popup
+    howToPlayCloseBtn.addEventListener('click', function() {
+      howToPlayPopup.style.display = 'none';
+    });
+
+    // Return to the initial popup from How to Play popup
+    returnBtn.addEventListener('click', function() {
+      howToPlayPopup.style.display = 'none';
+      initialPopup.style.display = 'block';
+    });
+
+      // Get the current date
+  var currentDate = new Date();
+
+  // Get the day, month, and year
+  var day = currentDate.getDate();
+  var month = currentDate.getMonth() + 1; // Note: Months are zero-based
+  var year = currentDate.getFullYear();
+
+  // Format the date as desired (e.g., "MM/DD/YYYY")
+  var formattedDate = month + '/' + day + '/' + year;
+
+  // Find the HTML element by its ID and set its content to the formatted date
+  document.getElementById('date').textContent = formattedDate;
+
+  // Get the Game Board popup and its elements
   const popup = document.getElementById('popup');
   const closeBtn = document.getElementById('closeBtn');
   const skipBtn = document.getElementById('skipBtn');
@@ -36,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const myForm = document.getElementById('myForm');
   const textInput = document.getElementById('textInput');
 
-  // Get the second popup and its elements
+  // Get the Response popup and its elements
   const answerPopup = document.getElementById('answerPopup');
   const answerCloseBtn = document.getElementById('answerCloseBtn');
   const answerPopupPoints = document.getElementById('answerPopupPoints');
