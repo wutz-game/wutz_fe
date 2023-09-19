@@ -9,13 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
     totalScore = parseInt(localStorage.getItem('gameScore')) || 0;
     answeredQuestions = JSON.parse(localStorage.getItem('answeredQuestions')) || {};
 
-    // Load saved state
-    for (const [cellId, color] of Object.entries(savedState)) {
-      document.getElementById(cellId).style.backgroundColor = color;
-    }
+// Load saved state
+for (const [cellId, color] of Object.entries(savedState)) {
+  document.getElementById(cellId).style.backgroundColor = color;
+}
 
     scoreElement.textContent = totalScore;
   }
+
+  loadGameState();
+
 
   function saveGameState() {
     let gameState = {};
@@ -33,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Get all game cells
   const gameCells = document.querySelectorAll('.game-cell');
+
+  // Get the 'Return to Game Board' button by its ID
+const returnToGameBtn = document.getElementById('returnToGameBtn');
 
   // Initial overlay
   const initialPopup = document.getElementById('initialPopup');
@@ -127,6 +133,12 @@ document.addEventListener('DOMContentLoaded', function() {
     popup.style.display = 'none';
     saveGameState();
   });
+
+  // Attach the event listener to the 'Return to Game Board' button
+returnToGameBtn.addEventListener('click', function() {
+  // Hide the answerPopup
+  answerPopup.style.display = 'none';
+});
 
   // Add click event to each game cell
   gameCells.forEach(function(cell) {
