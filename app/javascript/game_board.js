@@ -165,18 +165,25 @@ returnToGameBtn.addEventListener('click', function() {
       });
     });
 
+    // Send Game Results
     function sendGameResults(gameResultJSON) {
-      // ... (existing code)
+      // Create the object in the required JSON format
       let transformedData = {
-        // ... (existing code)
-        user_answers: Object.keys(gameResultJSON.answeredQuestions).map(key => {
-          let questionResult = gameResultJSON.answeredQuestions[key];
-          let result = questionResult.override ? "override" : (questionResult.userAnswer.toLowerCase() === questionResult.correctAnswer.toLowerCase() ? "correct" : "incorrect"); // Add this line to decide the result
-          return {
-            // ... (existing code)
-            result: result // Use the decided result
-          };
-        })
+        data: {
+          type: "user_games",
+          user_id: 12, // replace with actual user_id
+          game_id: 1, // replace with actual game_id
+          score: gameResultJSON.score,
+          user_answers: Object.keys(gameResultJSON.answeredQuestions).map(key => {
+            let questionResult = gameResultJSON.answeredQuestions[key];
+            let result = questionResult.override ? "override" : (questionResult.userAnswer.toLowerCase() === questionResult.correctAnswer.toLowerCase() ? "correct" : "incorrect");
+            return {
+              game_question_id: key,
+              user_answer: questionResult.userAnswer,
+              result: result
+            };
+          })
+        }
       };
 
       // Send transformedData via POST request
@@ -185,7 +192,7 @@ returnToGameBtn.addEventListener('click', function() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(transformedData),
+        body: JSON.stringify({ data: transformedData }),
       })
       .then(response => response.json())
       .then(data => {
@@ -290,8 +297,46 @@ overrideBtn.addEventListener('click', function() {
   }
 });
 
-  window.onbeforeunload = function() {
-    saveGameState();
-  };
-});
+window.onbeforeunload = function() {
+  saveGameState();
+};
 
+// Debug Clear Game State
+const debugButton = document.getElementById("debug-clear-state");
+debugButton.addEventListener("click", function() {
+  console.log("Clicked Clear Game State");
+
+  // Clear local storage
+  localStorage.clear();
+
+  // Clear game variables
+  answeredQuestions = {};
+  totalScore = 0;
+
+  // Revert all squares to their original color
+  gameCells.forEach((cell) => {
+    cell.style.backgroundColor = '';
+  });
+
+  // Update displayed score
+  updateDisplayedScore();
+
+  // Save cleared state
+  saveGameState();
+
+  // Make a GET request to clear server-side state
+  fetch("/games/clear_state", {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Server-side state cleared:", data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+});
+});
