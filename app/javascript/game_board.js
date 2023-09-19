@@ -149,41 +149,88 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-// Listen for form submission inside popup
-myForm.addEventListener('submit', function(e) {
-  e.preventDefault();
+    function sendGameResults(gameResultJSON) {
+      // Transform the data
+      let transformedData = {
+        data: {
+          type: "user_games",
+          user_id: 12, // Replace with actual user ID
+          game_id: 1,  // Replace with actual game ID
+          score: gameResultJSON.score,
+          user_answers: Object.keys(gameResultJSON.answeredQuestions).map(key => {
+            return {
+              game_question_id: key, // Replace with actual game_question_id
+              user_answer: gameResultJSON.answeredQuestions[key].userAnswer,
+              result: "undetermined" // Replace with actual result
+            };
+          })
+        }
+      };
 
-  const input = textInput.value.trim();
-  const pointsText = lastClickedCell.textContent;
-  const points = parseInt(pointsText, 10);
-  const correct_answer = lastClickedCell.getAttribute('data-answer');
+      // Send transformedData via POST request
+      fetch('/games/submit_result', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(transformedData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
 
-  // Mark the question as answered
-  answeredQuestions[lastClickedCell.id] = {
-    userAnswer: input,
-    correctAnswer: correct_answer,
-    points: pointsText
+
+    const submitGameButton = document.getElementById('submitGameBtn');
+
+      // Attach the event listener to the Submit Game button
+  submitGameButton.addEventListener('click', function() {
+    // Prepare game results as a JSON object
+    const gameResultJSON = {
+      score: totalScore,
+      answeredQuestions: answeredQuestions,
+      // ... Any other game state data
+    };
+
+    sendGameResults(gameResultJSON);
+  });
+
+
+  // Listen for form submission inside popup
+  myForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const input = textInput.value.trim();
+    const pointsText = lastClickedCell.textContent;
+    const points = parseInt(pointsText, 10);
+    const correct_answer = lastClickedCell.getAttribute('data-answer');
+
+    // Mark the question as answered
+    answeredQuestions[lastClickedCell.id] = {
+      userAnswer: input,
+      correctAnswer: correct_answer,
+      points: pointsText
+    };
+
+    // Populate and show the second popup
+    answerPopupPoints.textContent = pointsText;
+    answerPopupQuestion.textContent = questionElement.textContent;
+    userResponse.textContent = input;
+    correctResponse.textContent = correct_answer;
+
+    answerPopup.style.display = 'block';
+    textInput.value = '';
+    popup.style.display = 'none';
+
+    saveGameState();
+  });
+
+  window.onbeforeunload = function() {
+    saveGameState();
   };
-
-  // Populate and show the second popup
-  answerPopupPoints.textContent = pointsText;
-  answerPopupQuestion.textContent = questionElement.textContent;
-  userResponse.textContent = input;
-  correctResponse.textContent = correct_answer;
-
-  answerPopup.style.display = 'block';
-  textInput.value = '';
-  popup.style.display = 'none';
-
-  saveGameState();
-
-  textInput.value = '';
-  popup.style.display = 'none';
-  saveGameState();
-});
-
-window.onbeforeunload = function() {
-  saveGameState();
-};
 });
 
