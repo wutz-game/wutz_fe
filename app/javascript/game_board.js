@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
   let answeredQuestions = {};
+  let totalScore = 0;
+  const scoreElement = document.getElementById('scoreValue');
 
   function loadGameState() {
     const savedState = JSON.parse(localStorage.getItem('gameState')) || {};
-    const savedScore = parseInt(localStorage.getItem('gameScore')) || 0;
+    totalScore = parseInt(localStorage.getItem('gameScore')) || 0;
     answeredQuestions = JSON.parse(localStorage.getItem('answeredQuestions')) || {};
 
     // Load saved state
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById(cellId).style.backgroundColor = color;
     }
 
-    return savedScore;
+    scoreElement.textContent = totalScore;
   }
 
   function saveGameState() {
@@ -24,11 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.setItem('answeredQuestions', JSON.stringify(answeredQuestions));
   }
 
+  function updateDisplayedScore() {
+    scoreElement.textContent = totalScore;
+  }
+
   // Get all game cells
   const gameCells = document.querySelectorAll('.game-cell');
-
-  // Load previous game state and score
-  let totalScore = loadGameState();
 
   // Initial overlay
   const initialPopup = document.getElementById('initialPopup');
@@ -200,8 +203,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
-  // Listen for form submission inside popup
-  myForm.addEventListener('submit', function(e) {
+   // Listen for form submission inside popup
+   myForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
     const input = textInput.value.trim();
@@ -216,16 +219,27 @@ document.addEventListener('DOMContentLoaded', function() {
       points: pointsText
     };
 
+    if (input.toLowerCase() === correct_answer.toLowerCase()) {
+      lastClickedCell.style.backgroundColor = 'green';
+      totalScore += points;
+    } else {
+      lastClickedCell.style.backgroundColor = 'red';
+      totalScore -= points;
+    }
+
+        // Update the score
+        updateDisplayedScore();
+
+
     // Populate and show the second popup
     answerPopupPoints.textContent = pointsText;
     answerPopupQuestion.textContent = questionElement.textContent;
     userResponse.textContent = input;
     correctResponse.textContent = correct_answer;
-
     answerPopup.style.display = 'block';
+
     textInput.value = '';
     popup.style.display = 'none';
-
     saveGameState();
   });
 
