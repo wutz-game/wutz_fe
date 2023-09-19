@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   let answeredQuestions = {};
   let totalScore = 0;
+  const overrideBtn = document.getElementById('overrideBtn');
   const scoreElement = document.getElementById('scoreValue');
 
   function loadGameState() {
@@ -153,21 +154,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function sendGameResults(gameResultJSON) {
-      // Transform the data
+      // ... (existing code)
       let transformedData = {
-        data: {
-          type: "user_games",
-          user_id: 12, // Replace with actual user ID
-          game_id: 1,  // Replace with actual game ID
-          score: gameResultJSON.score,
-          user_answers: Object.keys(gameResultJSON.answeredQuestions).map(key => {
-            return {
-              game_question_id: key, // Replace with actual game_question_id
-              user_answer: gameResultJSON.answeredQuestions[key].userAnswer,
-              result: "undetermined" // Replace with actual result
-            };
-          })
-        }
+        // ... (existing code)
+        user_answers: Object.keys(gameResultJSON.answeredQuestions).map(key => {
+          let questionResult = gameResultJSON.answeredQuestions[key];
+          let result = questionResult.override ? "override" : (questionResult.userAnswer.toLowerCase() === questionResult.correctAnswer.toLowerCase() ? "correct" : "incorrect"); // Add this line to decide the result
+          return {
+            // ... (existing code)
+            result: result // Use the decided result
+          };
+        })
       };
 
       // Send transformedData via POST request
@@ -212,12 +209,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const points = parseInt(pointsText, 10);
     const correct_answer = lastClickedCell.getAttribute('data-answer');
 
-    // Mark the question as answered
-    answeredQuestions[lastClickedCell.id] = {
-      userAnswer: input,
-      correctAnswer: correct_answer,
-      points: pointsText
-    };
+  // Mark the question as answered
+  answeredQuestions[lastClickedCell.id] = {
+    userAnswer: input,
+    correctAnswer: correct_answer,
+    points: pointsText,
+    override: false
+  };
 
     if (input.toLowerCase() === correct_answer.toLowerCase()) {
       lastClickedCell.style.backgroundColor = 'green';
@@ -227,21 +225,58 @@ document.addEventListener('DOMContentLoaded', function() {
       totalScore -= points;
     }
 
+
+
         // Update the score
         updateDisplayedScore();
 
 
-    // Populate and show the second popup
-    answerPopupPoints.textContent = pointsText;
-    answerPopupQuestion.textContent = questionElement.textContent;
-    userResponse.textContent = input;
-    correctResponse.textContent = correct_answer;
-    answerPopup.style.display = 'block';
+// Populate and show the second popup
+answerPopupPoints.textContent = pointsText;
+answerPopupQuestion.textContent = questionElement.textContent;
+userResponse.textContent = input;
+correctResponse.textContent = correct_answer;
+answerPopup.style.display = 'block';
+
+    // Conditionally display the "I Was Close Enough" button
+    const overrideBtn = document.getElementById('overrideBtn');
+    console.log('Setting overrideBtn to none. answeredQuestions:', answeredQuestions);
+
+    overrideBtn.style.display = 'none'; // Default to hidden
+
+    if (input.toLowerCase() !== correct_answer.toLowerCase()) {
+      // Show the button only if this question has never been overridden
+      if (!answeredQuestions[lastClickedCell.id].override) {
+        overrideBtn.style.display = 'block';
+        overrideBtn.setAttribute('data-cell-id', lastClickedCell.id); // Set current cell ID
+      }
+    }
 
     textInput.value = '';
     popup.style.display = 'none';
     saveGameState();
   });
+
+// Event listener for the new 'I was close enough!' button
+overrideBtn.addEventListener('click', function() {
+  if (lastClickedCell) {
+    const cellId = lastClickedCell.id;
+    answeredQuestions[cellId].override = true; // Set 'override' field to true
+    console.log('Override set to true. answeredQuestions:', answeredQuestions);
+
+    lastClickedCell.style.backgroundColor = 'green';
+
+     // Correct the score by adding back twice the point value of the question
+     totalScore += (2 * parseInt(answeredQuestions[cellId].points, 10));
+    updateDisplayedScore();
+    answerPopup.style.display = 'none';
+
+    // Hide the override button after it has been clicked once for this cell
+    overrideBtn.style.display = 'none';
+
+    saveGameState();
+  }
+});
 
   window.onbeforeunload = function() {
     saveGameState();
