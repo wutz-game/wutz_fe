@@ -4,6 +4,6 @@ class GamesController < ApplicationController
   end
 
   def show
-    #@facade = ResultFacade.new  
+    @facade = ResultFacade.new  
   end
 end
