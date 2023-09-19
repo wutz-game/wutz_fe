@@ -65,6 +65,7 @@
   <h2>Question</h2>
   <p id="question"></p>
   <form id="myForm">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <input type="text" id="textInput" placeholder="Enter response...">
     <br>
     <button class="submit-response-button" role="button" type="submit">Submit Response</button><br>
