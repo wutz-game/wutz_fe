@@ -181,7 +181,7 @@ gameCells.forEach(function(cell) {
 
 
 // Save Local Storage as Cookie
-document.getElementById('setCookieBtn').addEventListener('click', function() {
+document.getElementById('resultsBtn').addEventListener('click', function() {
   const storedScore = localStorage.getItem('gameScore');
   const questionsAnswered = localStorage.getItem('answeredQuestions');
 
@@ -275,9 +275,9 @@ window.onbeforeunload = function() {
   saveGameState();
 };
 
-// Debug Clear Game State
-const debugButton = document.getElementById("debug-clear-state");
-debugButton.addEventListener("click", function() {
+// Clear Game Board button
+const clearBoardBtn = document.getElementById("clearBoardBtn");
+clearBoardBtn.addEventListener("click", function() {
   console.log("Clicked Clear Game State");
 
   // Clear local storage
