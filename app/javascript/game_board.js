@@ -124,18 +124,18 @@ const returnToGameBtn = document.getElementById('returnToGameBtn');
     answerPopup.style.display = 'none';
   });
 
-  // Skip button functionality
-  skipBtn.addEventListener('click', function() {
-    if (lastClickedCell) {
-      lastClickedCell.style.backgroundColor = '#C2BA71';
-      answeredQuestions[lastClickedCell.id] = {
-        userAnswer: null,
-        correctAnswer: lastClickedCell.getAttribute('data-answer'),
-        points: lastClickedCell.textContent,
-        override: false,
-        skipped: true  // Mark as skipped
-      };
-    }
+// Skip button functionality
+skipBtn.addEventListener('click', function() {
+  if (lastClickedCell) {
+    lastClickedCell.style.backgroundColor = '#C2BA71';
+    answeredQuestions[lastClickedCell.id] = {
+      userAnswer: null,
+      correctAnswer: lastClickedCell.getAttribute('data-answer'),
+      points: lastClickedCell.textContent,
+      override: false,
+      skipped: true
+    };
+  }
     textInput.value = '';
     popup.style.display = 'none';
     saveGameState();
@@ -147,12 +147,18 @@ returnToGameBtn.addEventListener('click', function() {
   answerPopup.style.display = 'none';
 });
 
-  // Add click event to each game cell
-  gameCells.forEach(function(cell) {
-    cell.addEventListener('click', function() {
-      const cellId = cell.id;
+// Add click event to each game cell
+gameCells.forEach(function(cell) {
+  cell.addEventListener('click', function() {
+    const cellId = cell.id;
 
-      if (answeredQuestions[cellId]) {
+    if (answeredQuestions[cellId]) {
+      if (answeredQuestions[cellId].skipped) {  // If the question was skipped
+        const question = cell.getAttribute('data-question');
+        questionElement.textContent = question;
+        popup.style.display = 'block';
+        lastClickedCell = cell;
+      } else {  // If the question was answered (correctly or incorrectly)
         const previousAnswer = answeredQuestions[cellId].userAnswer;
         const correctAnswer = answeredQuestions[cellId].correctAnswer;
         const pointsText = answeredQuestions[cellId].points;
@@ -163,14 +169,16 @@ returnToGameBtn.addEventListener('click', function() {
         userResponse.textContent = previousAnswer;
         correctResponse.textContent = correctAnswer;
         answerPopup.style.display = 'block';
-      } else {
-        const question = cell.getAttribute('data-question');
-        questionElement.textContent = question;
-        popup.style.display = 'block';
-        lastClickedCell = cell;
       }
-      });
-    });
+    } else {  // If the question has never been answered or skipped
+      const question = cell.getAttribute('data-question');
+      questionElement.textContent = question;
+      popup.style.display = 'block';
+      lastClickedCell = cell;
+    }
+  });
+});
+
 
 // Save Local Storage as Cookie
 document.getElementById('setCookieBtn').addEventListener('click', function() {
