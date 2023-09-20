@@ -37,7 +37,7 @@ class GamesFacade
   end
 
   def game_data
-    @game_data = GamesService.get_todays_game
+    @game_data = games_service.get_daily_game
   end
 
   def games_service
