@@ -13,11 +13,10 @@ class GamesController < ApplicationController
       return
     end
 
-    score = game_result[:score]
     user_answers = game_result[:user_answers]
 
-    if score.nil? || user_answers.nil?
-      render json: { success: false, error: 'Missing score or user_answers' }, status: 400
+    if user_answers.nil?
+      render json: { success: false, error: 'Missing user_answers' }, status: 400
       return
     end
 
@@ -36,10 +35,13 @@ class GamesController < ApplicationController
   private
 
   def game_result_params
-    params.require(:data).require(:data).permit(
-      :type, :user_id, :game_id, :score,
-      user_answers: %i[game_question_id user_answer result]
-    )
+    if params[:data].present?
+      params.require(:data).permit(user_answers: %i[game_question_id user_answer result])
+    elsif params[:game] && params[:game][:data]
+      params.require(:game).require(:data).permit(user_answers: %i[game_question_id user_answer result])
+    end
+  rescue ActionController::ParameterMissing
+    nil
   end
 
   def show

@@ -116,6 +116,13 @@ document.addEventListener('DOMContentLoaded', function() {
   skipBtn.addEventListener('click', function() {
     if (lastClickedCell) {
       lastClickedCell.style.backgroundColor = '#C2BA71';
+      answeredQuestions[lastClickedCell.id] = {
+        userAnswer: null,
+        correctAnswer: lastClickedCell.getAttribute('data-answer'),
+        points: lastClickedCell.textContent,
+        override: false,
+        skipped: true  // Mark as skipped
+      };
     }
     textInput.value = '';
     popup.style.display = 'none';
@@ -125,16 +132,39 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add click event to each game cell
   gameCells.forEach(function(cell) {
     cell.addEventListener('click', function() {
-      const question = cell.getAttribute('data-question');
-      const points = cell.textContent;
+      const cellId = cell.id;
 
-      // Set question text and points
-      questionElement.textContent = question;
+      if (answeredQuestions[cellId]) {
+        const previousAnswer = answeredQuestions[cellId].userAnswer;
+        const correctAnswer = answeredQuestions[cellId].correctAnswer;
+        const pointsText = answeredQuestions[cellId].points;
 
-      popup.style.display = 'block';
-      lastClickedCell = cell;
+        // Populate and show the second popup
+        answerPopupPoints.textContent = pointsText;
+        answerPopupQuestion.textContent = cell.getAttribute('data-question');
+        userResponse.textContent = previousAnswer;
+        correctResponse.textContent = correctAnswer;
+        answerPopup.style.display = 'block';
+      } else {
+        const question = cell.getAttribute('data-question');
+        questionElement.textContent = question;
+        popup.style.display = 'block';
+        lastClickedCell = cell;
+      }
+      });
     });
-  });
+
+// Save Local Storage as Cookie
+document.getElementById('setCookieBtn').addEventListener('click', function() {
+  const storedScore = localStorage.getItem('gameScore');
+  const questionsAnswered = localStorage.getItem('answeredQuestions');
+
+  document.cookie = `gameScore=${storedScore}; path=/`;
+  document.cookie = `answeredQuestions=${questionsAnswered}; path=/`;
+
+  //Redirect to /game_results
+  window.location.href = '/game_results';
+});
 
   // Listen for form submission inside popup
   myForm.addEventListener('submit', function(e) {
@@ -144,15 +174,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const points = parseInt(pointsText, 10);
     const correct_answer = lastClickedCell.getAttribute('data-answer');
 
-    if (lastClickedCell) {
-      if (input.toLowerCase() === correct_answer.toLowerCase()) {
-        lastClickedCell.style.backgroundColor = 'green';
-        totalScore += points;
-      } else {
-        lastClickedCell.style.backgroundColor = 'red';
-        totalScore -= points;
-      }
-      updateDisplayedScore();
+    // Mark the question as answered
+    answeredQuestions[lastClickedCell.id] = {
+      userAnswer: input,
+      correctAnswer: correct_answer,
+      points: pointsText,
+      override: false,
+      skipped: false  // Not skipped
+    };
+
+    if (input.toLowerCase() === correct_answer.toLowerCase()) {
+      lastClickedCell.style.backgroundColor = 'green';
+      totalScore += points;
+    } else {
+      lastClickedCell.style.backgroundColor = 'red';
+      totalScore -= points;
+    }
+
+
+
+        // Update the score
+        updateDisplayedScore();
 
       // Populate and show the second popup
       answerPopupPoints.textContent = pointsText;
