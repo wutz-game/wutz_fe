@@ -32,7 +32,6 @@ class GamesFacade
 
   def categories
     @categories = game_data[:data][:categories].map do |category_data|
-      binding.pry
       QuizCategory.new(category_data)
     end
   end
