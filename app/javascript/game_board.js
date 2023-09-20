@@ -11,14 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return savedScore;
   }
 
-  function saveGameState() {
-    let gameState = {};
-    gameCells.forEach((cell) => {
-      gameState[cell.id] = cell.style.backgroundColor;
-    });
-    localStorage.setItem('gameState', JSON.stringify(gameState));
-    localStorage.setItem('gameScore', totalScore);
-  }
 
   // Get all game cells
   const gameCells = document.querySelectorAll('.game-cell');
@@ -43,11 +35,38 @@ document.addEventListener('DOMContentLoaded', function() {
       initialPopup.style.display = 'none';
     });
 
-    // When Login button is clicked (does nothing for now)
-    loginBtn.addEventListener('click', function() {
-      // Do nothing for now
+    // When Login button is clicked redirects to login page
+    loginBtn.addEventListener('click', function redirectToLogin() {
+      window.location.href = "/login";
     });
 
+    // When Logout button is clicked, logout user and redirect to login page
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', function logout() {
+      fetch('/logout', {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-Token': getCSRFToken(),
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          // Redirect to the login page after successful logout
+          window.location.href = '/login';
+        } else {
+          console.error('Logout failed');
+        }
+      })
+      .catch(error => {
+        console.error('Error during logout:', error);
+      });
+    });
+
+    function getCSRFToken() {
+      const metaTag = document.querySelector('meta[name="csrf-token"]');
+      return metaTag ? metaTag.content : '';
+    }
+    
     // When How to Play button is clicked, show the How to Play popup
     howToPlayBtn.addEventListener('click', function() {
       howToPlayPopup.style.display = 'block';
