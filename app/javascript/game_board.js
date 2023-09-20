@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
       initialPopup.style.display = 'none';
     });
 
-    // When Login button is clicked (does nothing for now)
+    // When Login button is clicked redirects to login page
     loginBtn.addEventListener('click', function redirectToLogin() {
       window.location.href = "/login";
     });
