@@ -1,3 +1,5 @@
 class GameResultsController < ApplicationController
-  def index; end
+  def index 
+    @facade = ResultsFacade.new(cookies[:answeredQuestions])
+  end
 end
