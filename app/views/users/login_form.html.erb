@@ -1,0 +1,13 @@
+<h1>Login</h1>
+
+<div class="container box">
+  <h1 class="form">
+    <%= form_for :mailers, url: mailers_path do |f| %>
+    <%= f.label "Email -" %>
+    <%= f.text_field :email %><br>
+    <%= f.label "What is the mood of the day?" %>
+    <%= f.text_field :mood %><br>
+    <%= f.submit "Send email", class: "center" %>
+    <% end %>
+  </h1>
+</div>
