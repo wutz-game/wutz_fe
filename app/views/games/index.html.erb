@@ -58,15 +58,9 @@
 <br>
 <div id="totalScore" align="center">Total Score: <span id="scoreValue">0</span></div>
 <br>
-<button id="setCookieBtn">Set Cookie</button>
-<% if Rails.env.development? %>
-  <!-- This button will only appear in development mode -->
-  <br>
-  <br>
-  <div style="display: flex; justify-content: center;">
-    <button id="debug-clear-state">Clear Game State ***DEBUG ONLY***</button>
-  </div>
-<% end %>
+<button id="resultsBtn">Complete Game</button>
+<br>
+<button id="clearBoardBtn">Clear Game Board</button>
 <!-- Question Overlay Popup -->
 <div id="popup" style="display:none;">
   <span id="closeBtn" style="cursor:pointer;">X</span>
