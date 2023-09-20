@@ -9,9 +9,11 @@ RSpec.describe "User create form" do
     click_on "Create Account"
 
     username = "username_test"
+    email = "email_test"
     password = "password_test"
 
     fill_in :user_username, with: username
+    fill_in :user_email, with: email
     fill_in :user_password, with: password
 
     click_on "Create User"
