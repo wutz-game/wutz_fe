@@ -12,9 +12,5 @@ Rails.application.routes.draw do
   resources :session, only: [:destroy]
   delete '/logout', to: 'sessions#destroy', as: 'logout'
 
-  # mailer stuff
-  get "/sent", to: "mailers#sent"
-  resources :mailers, only: [:create]
-
   mount Sidekiq::Web => '/sidekiq'
 end
