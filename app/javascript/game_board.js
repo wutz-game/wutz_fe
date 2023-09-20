@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // When Login button is clicked (does nothing for now)
-    loginBtn.addEventListener('click', function() {
-      // Do nothing for now
+    loginBtn.addEventListener('click', function redirectToLogin() {
+      window.location.href = "/login";
     });
-
+    
     // When How to Play button is clicked, show the How to Play popup
     howToPlayBtn.addEventListener('click', function() {
       howToPlayPopup.style.display = 'block';
