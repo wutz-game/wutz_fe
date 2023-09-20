@@ -128,6 +128,13 @@ const returnToGameBtn = document.getElementById('returnToGameBtn');
   skipBtn.addEventListener('click', function() {
     if (lastClickedCell) {
       lastClickedCell.style.backgroundColor = '#C2BA71';
+      answeredQuestions[lastClickedCell.id] = {
+        userAnswer: null,
+        correctAnswer: lastClickedCell.getAttribute('data-answer'),
+        points: lastClickedCell.textContent,
+        override: false,
+        skipped: true  // Mark as skipped
+      };
     }
     textInput.value = '';
     popup.style.display = 'none';
@@ -165,25 +172,27 @@ returnToGameBtn.addEventListener('click', function() {
       });
     });
 
-    // Send Game Results
-    function sendGameResults(gameResultJSON) {
-      // Create the object in the required JSON format
-      let transformedData = {
-        data: {
-          type: "user_games",
-          user_id: 12, // replace with actual user_id
-          game_id: 1, // replace with actual game_id
-          score: gameResultJSON.score,
-          user_answers: Object.keys(gameResultJSON.answeredQuestions).map(key => {
-            let questionResult = gameResultJSON.answeredQuestions[key];
-            let result = questionResult.override ? "override" : (questionResult.userAnswer.toLowerCase() === questionResult.correctAnswer.toLowerCase() ? "correct" : "incorrect");
-            return {
-              game_question_id: key,
-              user_answer: questionResult.userAnswer,
-              result: result
+  // Send Game Results
+  function sendGameResults(gameResultJSON) {
+    let transformedData = {
+      // ... Existing Code
+      user_answers: Object.keys(gameResultJSON.answeredQuestions).map(key => {
+        let questionResult = gameResultJSON.answeredQuestions[key];
+        let result;
+
+        if (questionResult.skipped) {
+          result = "skipped";
+        } else {
+          result = questionResult.override ? "override" : (questionResult.userAnswer.toLowerCase() === questionResult.correctAnswer.toLowerCase() ? "correct" : "incorrect");
+        }
+
+        // ... Existing Code
+        return {
+          game_question_id: key,
+          user_answer: questionResult.userAnswer,
+          result: result
             };
           })
-        }
       };
 
       // Send transformedData via POST request
@@ -207,8 +216,8 @@ returnToGameBtn.addEventListener('click', function() {
     const submitGameButton = document.getElementById('submitGameBtn');
 
       // Attach the event listener to the Submit Game button
-  submitGameButton.addEventListener('click', function() {
-    // Prepare game results as a JSON object
+      submitGameButton.addEventListener('click', function() {
+        // Prepare game results as a JSON object
     const gameResultJSON = {
       score: totalScore,
       answeredQuestions: answeredQuestions,
@@ -228,13 +237,14 @@ returnToGameBtn.addEventListener('click', function() {
     const points = parseInt(pointsText, 10);
     const correct_answer = lastClickedCell.getAttribute('data-answer');
 
-  // Mark the question as answered
-  answeredQuestions[lastClickedCell.id] = {
-    userAnswer: input,
-    correctAnswer: correct_answer,
-    points: pointsText,
-    override: false
-  };
+    // Mark the question as answered
+    answeredQuestions[lastClickedCell.id] = {
+      userAnswer: input,
+      correctAnswer: correct_answer,
+      points: pointsText,
+      override: false,
+      skipped: false  // Not skipped
+    };
 
     if (input.toLowerCase() === correct_answer.toLowerCase()) {
       lastClickedCell.style.backgroundColor = 'green';
