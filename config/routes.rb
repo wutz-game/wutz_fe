@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'games#index'
+  resources :game_results, only: :index
   resources :games, only: %i[index create]
 
   resources :users, only: [:new, :create]
@@ -9,4 +10,7 @@ Rails.application.routes.draw do
   
   resources :session, only: [:destroy]
   delete '/logout', to: 'sessions#destroy', as: 'logout'
+  post 'games/submit_result', to: 'games#submit_result'
+
+  get 'games/clear_state', to: 'games#clear_state' if Rails.env.development?
 end
