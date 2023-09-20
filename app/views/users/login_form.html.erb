@@ -10,5 +10,11 @@
   <%= form.submit "Login" %>
 <% end %>
 
+<% if @authenticated %>
+  <script type="text/javascript">
+    localStorage.setItem('user_id', <%= @user_id %>);
+  </script>
+<% end %>
+
 <!-- Link to Create Account -->
 <p>Don't have an account? <%= link_to "Create Account", new_user_path %></p>
