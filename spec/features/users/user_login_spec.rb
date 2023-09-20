@@ -13,6 +13,8 @@ RSpec.describe "Login" do
 
     click_on "Login"
 
+    # expect(current_path).to eq("/") something about this is broken
+
     expect(page).to have_content("Welcome, #{user.username}")
   end
 
