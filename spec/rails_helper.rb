@@ -7,6 +7,10 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
+
+require 'sidekiq/testing'
+Sidekiq::Testing.inline!
+
 # Capybara and Selenium configuration
 Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new

@@ -69,6 +69,7 @@ group :test do
   gem "webmock"
   gem "launchy"
   gem 'shoulda-matchers'
+  gem 'factory_bot'
 end
 
 group :development do

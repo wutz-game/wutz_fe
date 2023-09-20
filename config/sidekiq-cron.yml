@@ -1,0 +1,4 @@
+daily_email_worker:
+  cron: "0 0 * * *" # Run every day at midnight
+  class: "DailyEmailWorker"
+  queue: default
