@@ -172,61 +172,17 @@ returnToGameBtn.addEventListener('click', function() {
       });
     });
 
-  // Send Game Results
-  function sendGameResults(gameResultJSON) {
-    let transformedData = {
-      // ... Existing Code
-      user_answers: Object.keys(gameResultJSON.answeredQuestions).map(key => {
-        let questionResult = gameResultJSON.answeredQuestions[key];
-        let result;
+// Save Local Storage as Cookie
+document.getElementById('setCookieBtn').addEventListener('click', function() {
+  const storedScore = localStorage.getItem('gameScore');
+  const questionsAnswered = localStorage.getItem('answeredQuestions');
 
-        if (questionResult.skipped) {
-          result = "skipped";
-        } else {
-          result = questionResult.override ? "override" : (questionResult.userAnswer.toLowerCase() === questionResult.correctAnswer.toLowerCase() ? "correct" : "incorrect");
-        }
+  document.cookie = `gameScore=${storedScore}; path=/`;
+  document.cookie = `answeredQuestions=${questionsAnswered}; path=/`;
 
-        // ... Existing Code
-        return {
-          game_question_id: key,
-          user_answer: questionResult.userAnswer,
-          result: result
-            };
-          })
-      };
-
-      // Send transformedData via POST request
-      fetch('/games/submit_result', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ data: transformedData }),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-    }
-
-
-    const submitGameButton = document.getElementById('submitGameBtn');
-
-      // Attach the event listener to the Submit Game button
-      submitGameButton.addEventListener('click', function() {
-        // Prepare game results as a JSON object
-    const gameResultJSON = {
-      score: totalScore,
-      answeredQuestions: answeredQuestions,
-      // ... Any other game state data
-    };
-
-    sendGameResults(gameResultJSON);
-  });
-
+  //Redirect to /game_results
+  window.location.href = '/game_results';
+});
 
    // Listen for form submission inside popup
    myForm.addEventListener('submit', function(e) {
