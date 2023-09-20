@@ -3,3 +3,4 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "./game_board.js";
 import "./game_results.js";
+import "./login_form.js";
