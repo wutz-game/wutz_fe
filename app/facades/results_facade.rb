@@ -1,8 +1,8 @@
 class ResultsFacade
   attr_reader :score
 
-  def initialize(results)
-      @score = "-5"
+  def initialize(results, score)
+      @score = score
       @questions = JSON.parse(results, symbolize_names: true)
 
       @cell_0_0 = cell_lookup(:cell_0_0)
