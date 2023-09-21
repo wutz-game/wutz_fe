@@ -22,6 +22,12 @@ class UsersController < ApplicationController
       render :login_form
     end
   end
+
+  def destroy
+    session[:user_id] = nil
+    redirect_to root_path
+    flash[notice:] = "Logged out successfully."
+  end
   
   private
   def user_params

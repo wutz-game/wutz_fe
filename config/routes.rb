@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get "/login", to: "users#login_form"
   post "/login", to: "users#login"
   get '/create_account', to: 'users#new', as: 'create_account'
+  get '/logout', to: 'users#destroy'
 
   resources :mailers, only: [:create]
   mount Sidekiq::Web => '/sidekiq'

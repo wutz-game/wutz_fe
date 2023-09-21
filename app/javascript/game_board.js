@@ -56,7 +56,7 @@ for (const [cellId, color] of Object.entries(savedState)) {
       initialPopup.style.display = 'none';
     });
 
-    // When Login button is clicked (does nothing for now)
+    // When Login button is clicked, login user
     loginBtn.addEventListener('click', function redirectToLogin() {
       window.location.href = "/login";
     });
