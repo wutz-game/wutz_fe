@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -19,4 +21,7 @@ Rails.application.routes.draw do
   get "/login", to: "users#login_form"
   post "/login", to: "users#login"
   get '/create_account', to: 'users#new', as: 'create_account'
+
+  resources :mailers, only: [:create]
+  mount Sidekiq::Web => '/sidekiq'
 end
