@@ -60,6 +60,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "pry"
   gem 'letter_opener'
+  gem 'simplecov'
 end
 
 group :test do
