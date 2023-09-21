@@ -55,7 +55,7 @@ const returnToGameBtn = document.getElementById('returnToGameBtn');
       initialPopup.style.display = 'none';
     });
 
-    // When Login button is clicked (does nothing for now)
+    // When Login button is clicked, login user
     loginBtn.addEventListener('click', function redirectToLogin() {
       window.location.href = "/login";
     });

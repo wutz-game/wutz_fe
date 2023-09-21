@@ -8,7 +8,11 @@
   <% end %>
   <div class="button-wrapper">
     <button class="initialBtn", id="playBtn">Play</button><br>
-    <button class="initialBtn", id="loginBtn">Login</button><br>
+    <% if session[:user_id] != nil %>
+      <%= link_to 'Logout', logout_path, method: :delete %><br>
+     <% else %>
+      <button class="initialBtn", id="loginBtn">Login</button><br>
+    <% end %>
     <button class="initialBtn", id="howToPlayBtn">How to Play</button>
     <br>
     <h3>
