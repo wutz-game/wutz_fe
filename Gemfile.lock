@@ -219,6 +219,9 @@ GEM
     nokogiri (1.15.4-arm64-darwin)
       racc (~> 1.4)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3d1f6cd (fix: gemlock)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
     pg (1.5.4)
@@ -412,9 +415,13 @@ PLATFORMS
   arm64-darwin-21
   arm64-darwin-22
 <<<<<<< HEAD
+<<<<<<< HEAD
   x86_64-linux
 =======
 >>>>>>> 66136fd (Initial commit)
+=======
+  x86_64-linux
+>>>>>>> 3d1f6cd (fix: gemlock)
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
