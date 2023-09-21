@@ -75,7 +75,6 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'pry'
   gem 'letter_opener'
-  gem 'simplecov'
 end
 
 group :test do
