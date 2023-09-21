@@ -3,6 +3,9 @@
 <div id="initialPopup" style="display:block;">
   <h1>Wutz</h1>
   <h2>A Daily Trivia Game</h2>
+  <% if session[:user_id] != nil %>
+    <p>Hello <%= @user.username %>!</p>
+  <% end %>
   <div class="button-wrapper">
     <button class="initialBtn", id="playBtn">Play</button><br>
     <button class="initialBtn", id="loginBtn">Login</button><br>
