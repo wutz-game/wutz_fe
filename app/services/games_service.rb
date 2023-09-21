@@ -1,8 +1,7 @@
 class GamesService
 
-  # Note: This is mocked data, at the moment. This will update when we have an endpoint for the BE. This is the expected return value of a game.
   def conn
-    Faraday.new("https://wutz-be.onrender.com")
+    Faraday.new("https://pacific-wildwood-99462-95c6d81ab3e1.herokuapp.com")
   end
 
   def get_url(url)        
