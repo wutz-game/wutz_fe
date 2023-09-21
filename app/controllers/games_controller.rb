@@ -3,6 +3,9 @@ class GamesController < ApplicationController
 
   def index
     @facade = GamesFacade.new
+    if session[:user_id] != nil
+      @user = User.find(session[:user_id])
+    end
   end
 
   def submit_result
