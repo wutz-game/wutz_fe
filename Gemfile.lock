@@ -72,6 +72,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     base64 (0.1.1)
 <<<<<<< HEAD
+<<<<<<< HEAD
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -87,6 +88,9 @@ GEM
 >>>>>>> fe088ba (Install rspec-rails, capybara, and simplecov gems)
 =======
 >>>>>>> f9a35fc (feat: Finish API consumption from be)
+=======
+    bcrypt (3.1.19)
+>>>>>>> 1e61cec (bcrypt)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -382,6 +386,7 @@ PLATFORMS
 >>>>>>> 66136fd (Initial commit)
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   bootsnap
   capybara
   debug
