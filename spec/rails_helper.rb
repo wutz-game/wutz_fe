@@ -9,6 +9,9 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 
+require 'simplecov'
+SimpleCov.start
+
 require 'sidekiq/testing'
 
 RSpec.configure do |config|
