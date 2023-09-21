@@ -104,11 +104,16 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    chronic (0.10.2)
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 66136fd (Initial commit)
 =======
+=======
+    connection_pool (2.4.1)
+>>>>>>> 23a1630 (sidekiq/redis)
     crack (0.4.5)
       rexml
 >>>>>>> 75e4022 (Chore: updates gemfile.lock)
@@ -181,7 +186,12 @@ GEM
 >>>>>>> 7552c5a (feat: POST method finish for save games)
     launchy (2.5.2)
       addressable (~> 2.8)
+<<<<<<< HEAD
 >>>>>>> 75e4022 (Chore: updates gemfile.lock)
+=======
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
+>>>>>>> 23a1630 (sidekiq/redis)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -264,6 +274,9 @@ GEM
     rake (13.0.6)
     rdoc (6.5.0)
       psych (>= 4.0.0)
+    redis (4.8.1)
+    redis-client (0.17.0)
+      connection_pool
     regexp_parser (2.8.1)
     reline (0.3.8)
       io-console (~> 0.5)
@@ -310,7 +323,15 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+<<<<<<< HEAD
 >>>>>>> 75e4022 (Chore: updates gemfile.lock)
+=======
+    sidekiq (7.1.4)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.14.0)
+>>>>>>> 23a1630 (sidekiq/redis)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -375,8 +396,13 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 66136fd (Initial commit)
 =======
+=======
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
+>>>>>>> 23a1630 (sidekiq/redis)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 >>>>>>> fe088ba (Install rspec-rails, capybara, and simplecov gems)
@@ -421,12 +447,15 @@ DEPENDENCIES
   jbuilder
   jsonapi-serializer
   launchy
+  letter_opener
   pg (~> 1.1)
   pry
   puma (~> 5.0)
   rails (~> 7.0.7, >= 7.0.7.2)
+  redis (~> 4.0)
   rspec-rails
   selenium-webdriver
+  sidekiq
   simplecov
   sprockets-rails
   stimulus-rails
@@ -439,7 +468,11 @@ DEPENDENCIES
 =======
   webdrivers
   webmock
+<<<<<<< HEAD
 >>>>>>> 75e4022 (Chore: updates gemfile.lock)
+=======
+  whenever
+>>>>>>> 23a1630 (sidekiq/redis)
 
 RUBY VERSION
    ruby 3.2.2p53
