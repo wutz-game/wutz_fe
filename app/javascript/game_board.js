@@ -1,15 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
+  let answeredQuestions = {};
+  let totalScore = 0;
+  const overrideBtn = document.getElementById('overrideBtn');
+  const scoreElement = document.getElementById('scoreValue');
+
   function loadGameState() {
     const savedState = JSON.parse(localStorage.getItem('gameState')) || {};
-    const savedScore = parseInt(localStorage.getItem('gameScore')) || 0;
+    totalScore = parseInt(localStorage.getItem('gameScore')) || 0;
+    answeredQuestions = JSON.parse(localStorage.getItem('answeredQuestions')) || {};
 
-    // Load saved state
-    for (const [cellId, color] of Object.entries(savedState)) {
-      document.getElementById(cellId).style.backgroundColor = color;
-    }
+// Load saved state
+for (const [cellId, color] of Object.entries(savedState)) {
+  document.getElementById(cellId).style.backgroundColor = color;
+}
 
-    return savedScore;
+    scoreElement.textContent = totalScore;
   }
+
+  loadGameState();
+
 
   function saveGameState() {
     let gameState = {};
@@ -18,15 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     localStorage.setItem('gameState', JSON.stringify(gameState));
     localStorage.setItem('gameScore', totalScore);
+    localStorage.setItem('answeredQuestions', JSON.stringify(answeredQuestions));
+  }
+
+  function updateDisplayedScore() {
+    scoreElement.textContent = totalScore;
   }
 
   // Get all game cells
   const gameCells = document.querySelectorAll('.game-cell');
 
-  // Load previous game state and score
-  let totalScore = loadGameState();
-  const scoreElement = document.getElementById('scoreValue');
-  scoreElement.textContent = totalScore;
+  // Get the 'Return to Game Board' button by its ID
+const returnToGameBtn = document.getElementById('returnToGameBtn');
 
   // Initial overlay
   const initialPopup = document.getElementById('initialPopup');
@@ -112,63 +124,193 @@ document.addEventListener('DOMContentLoaded', function() {
     answerPopup.style.display = 'none';
   });
 
-  // Skip button functionality
-  skipBtn.addEventListener('click', function() {
-    if (lastClickedCell) {
-      lastClickedCell.style.backgroundColor = '#C2BA71';
-    }
+// Skip button functionality
+skipBtn.addEventListener('click', function() {
+  if (lastClickedCell) {
+    lastClickedCell.style.backgroundColor = '#C2BA71';
+    answeredQuestions[lastClickedCell.id] = {
+      userAnswer: null,
+      correctAnswer: lastClickedCell.getAttribute('data-answer'),
+      points: lastClickedCell.textContent,
+      override: false,
+      skipped: true
+    };
+  }
     textInput.value = '';
     popup.style.display = 'none';
     saveGameState();
   });
 
-  // Add click event to each game cell
-  gameCells.forEach(function(cell) {
-    cell.addEventListener('click', function() {
+  // Attach the event listener to the 'Return to Game Board' button
+returnToGameBtn.addEventListener('click', function() {
+  // Hide the answerPopup
+  answerPopup.style.display = 'none';
+});
+
+// Add click event to each game cell
+gameCells.forEach(function(cell) {
+  cell.addEventListener('click', function() {
+    const cellId = cell.id;
+
+    if (answeredQuestions[cellId]) {
+      if (answeredQuestions[cellId].skipped) {  // If the question was skipped
+        const question = cell.getAttribute('data-question');
+        questionElement.textContent = question;
+        popup.style.display = 'block';
+        lastClickedCell = cell;
+      } else {  // If the question was answered (correctly or incorrectly)
+        const previousAnswer = answeredQuestions[cellId].userAnswer;
+        const correctAnswer = answeredQuestions[cellId].correctAnswer;
+        const pointsText = answeredQuestions[cellId].points;
+
+        // Populate and show the second popup
+        answerPopupPoints.textContent = pointsText;
+        answerPopupQuestion.textContent = cell.getAttribute('data-question');
+        userResponse.textContent = previousAnswer;
+        correctResponse.textContent = correctAnswer;
+        answerPopup.style.display = 'block';
+      }
+    } else {  // If the question has never been answered or skipped
       const question = cell.getAttribute('data-question');
-      const points = cell.textContent;
-
-      // Set question text and points
       questionElement.textContent = question;
-
       popup.style.display = 'block';
       lastClickedCell = cell;
-    });
+    }
   });
+});
 
-  // Listen for form submission inside popup
-  myForm.addEventListener('submit', function(e) {
+
+// Save Local Storage as Cookie
+document.getElementById('resultsBtn').addEventListener('click', function() {
+  const storedScore = localStorage.getItem('gameScore');
+  const questionsAnswered = localStorage.getItem('answeredQuestions');
+
+  document.cookie = `gameScore=${storedScore}; path=/`;
+  document.cookie = `answeredQuestions=${questionsAnswered}; path=/`;
+
+  //Redirect to /game_results
+  window.location.href = '/game_results';
+});
+
+   // Listen for form submission inside popup
+   myForm.addEventListener('submit', function(e) {
     e.preventDefault();
+
     const input = textInput.value.trim();
     const pointsText = lastClickedCell.textContent;
     const points = parseInt(pointsText, 10);
     const correct_answer = lastClickedCell.getAttribute('data-answer');
 
-    if (lastClickedCell) {
-      if (input.toLowerCase() === correct_answer.toLowerCase()) {
-        lastClickedCell.style.backgroundColor = 'green';
-        totalScore += points;
-      } else {
-        lastClickedCell.style.backgroundColor = 'red';
-        totalScore -= points;
-      }
-      updateDisplayedScore();
+    // Mark the question as answered
+    answeredQuestions[lastClickedCell.id] = {
+      userAnswer: input,
+      correctAnswer: correct_answer,
+      points: pointsText,
+      override: false,
+      skipped: false  // Not skipped
+    };
 
-      // Populate and show the second popup
-      answerPopupPoints.textContent = pointsText;
-      answerPopupQuestion.textContent = questionElement.textContent;
-      userResponse.textContent = input;
-      correctResponse.textContent = correct_answer;
-      answerPopup.style.display = 'block';
+    if (input.toLowerCase() === correct_answer.toLowerCase()) {
+      lastClickedCell.style.backgroundColor = 'green';
+      totalScore += points;
+    } else {
+      lastClickedCell.style.backgroundColor = 'red';
+      totalScore -= points;
+    }
+
+
+
+        // Update the score
+        updateDisplayedScore();
+
+
+// Populate and show the second popup
+answerPopupPoints.textContent = pointsText;
+answerPopupQuestion.textContent = questionElement.textContent;
+userResponse.textContent = input;
+correctResponse.textContent = correct_answer;
+answerPopup.style.display = 'block';
+
+    // Conditionally display the "I Was Close Enough" button
+    const overrideBtn = document.getElementById('overrideBtn');
+    console.log('Setting overrideBtn to none. answeredQuestions:', answeredQuestions);
+
+    overrideBtn.style.display = 'none'; // Default to hidden
+
+    if (input.toLowerCase() !== correct_answer.toLowerCase()) {
+      // Show the button only if this question has never been overridden
+      if (!answeredQuestions[lastClickedCell.id].override) {
+        overrideBtn.style.display = 'block';
+        overrideBtn.setAttribute('data-cell-id', lastClickedCell.id); // Set current cell ID
+      }
     }
 
     textInput.value = '';
     popup.style.display = 'none';
     saveGameState();
-
   });
 
-  window.onbeforeunload = function() {
+// Event listener for the new 'I was close enough!' button
+overrideBtn.addEventListener('click', function() {
+  if (lastClickedCell) {
+    const cellId = lastClickedCell.id;
+    answeredQuestions[cellId].override = true; // Set 'override' field to true
+    console.log('Override set to true. answeredQuestions:', answeredQuestions);
+
+    lastClickedCell.style.backgroundColor = 'green';
+
+     // Correct the score by adding back twice the point value of the question
+     totalScore += (2 * parseInt(answeredQuestions[cellId].points, 10));
+    updateDisplayedScore();
+    answerPopup.style.display = 'none';
+
+    // Hide the override button after it has been clicked once for this cell
+    overrideBtn.style.display = 'none';
+
     saveGameState();
-  };
+  }
+});
+
+window.onbeforeunload = function() {
+  saveGameState();
+};
+
+// Clear Game Board button
+const clearBoardBtn = document.getElementById("clearBoardBtn");
+clearBoardBtn.addEventListener("click", function() {
+  console.log("Clicked Clear Game State");
+
+  // Clear local storage
+  localStorage.clear();
+
+  // Clear game variables
+  answeredQuestions = {};
+  totalScore = 0;
+
+  // Revert all squares to their original color
+  gameCells.forEach((cell) => {
+    cell.style.backgroundColor = '';
+  });
+
+  // Update displayed score
+  updateDisplayedScore();
+
+  // Save cleared state
+  saveGameState();
+
+  // Make a GET request to clear server-side state
+  fetch("/games/clear_state", {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Server-side state cleared:", data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+});
 });

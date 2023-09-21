@@ -58,13 +58,16 @@
 <br>
 <div id="totalScore" align="center">Total Score: <span id="scoreValue">0</span></div>
 <br>
-<button id="submitGameBtn">Submit Game</button>
+<button id="resultsBtn">Complete Game</button>
+<br>
+<button id="clearBoardBtn">Clear Game Board</button>
 <!-- Question Overlay Popup -->
 <div id="popup" style="display:none;">
   <span id="closeBtn" style="cursor:pointer;">X</span>
   <h2>Question</h2>
   <p id="question"></p>
   <form id="myForm">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <input type="text" id="textInput" placeholder="Enter response...">
     <br>
     <button class="submit-response-button" role="button" type="submit">Submit Response</button><br>
@@ -84,4 +87,7 @@
   <p id="answerPopupQuestion"></p>
   <div>Your response: <span id="userResponse"></span></div>
   <div>Correct Response: <span id="correctResponse"></span></div>
-</div>
+  <br>
+  <button id="overrideBtn" style="display:none;">I Was Close Enough</button>
+  <br>
+  <button id="returnToGameBtn">Return to Game Board</button>
