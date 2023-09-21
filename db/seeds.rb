@@ -30,3 +30,4 @@ categories = [67,51,81]
 categories.each do |cat|
     question_create(cat)
 end
+User.create(username: "username_test", email: "email_test", password: "password_test")
