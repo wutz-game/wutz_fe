@@ -44,7 +44,7 @@ for (const [cellId, color] of Object.entries(savedState)) {
   // Initial overlay
   const initialPopup = document.getElementById('initialPopup');
   const playBtn = document.getElementById('playBtn');
-  const loginBtn = document.getElementById('loginBtn');
+  // const loginBtn = document.getElementById('loginBtn');
   const howToPlayBtn = document.getElementById('howToPlayBtn');
 
   const howToPlayPopup = document.getElementById('howToPlayPopup');
@@ -56,10 +56,10 @@ for (const [cellId, color] of Object.entries(savedState)) {
       initialPopup.style.display = 'none';
     });
 
-    // When Login button is clicked, login user
-    loginBtn.addEventListener('click', function redirectToLogin() {
-      window.location.href = "/login";
-    });
+    // // When Login button is clicked, login user
+    // loginBtn.addEventListener('click', function redirectToLogin() {
+    //   window.location.href = "/login";
+    // });
 
     // When How to Play button is clicked, show the How to Play popup
     howToPlayBtn.addEventListener('click', function() {

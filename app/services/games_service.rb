@@ -16,7 +16,6 @@ class GamesService
       req.headers[:content_type] = 'application/json'
       req.body = JSON.generate(user_game: game)
     end
-    binding.pry
   end
 
   def get_daily_game
