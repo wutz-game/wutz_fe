@@ -9,6 +9,7 @@ Wutz is a daily social trivia game using an API scrapping Jeopardy Productions t
 - [🎮 Gameplay](#🎮-gameplay)
 - [📱 Wutz Interface](#📱-wutz-interface)
 - [🚀 Getting Started](#🚀-getting-started)
+- [👤 Authors](#-authors)
 
 ## 🔗 Important Links
 
@@ -156,5 +157,20 @@ rails db:{create,migrate,seed}
 </details>
 
 
+## 👤 Authors
 
-[^1] This is not associated with jeopardy productions, inc.
+**Wutz** is a student project built in September, 2023 for the Backend Program of the [Turing School of Software and Design](https://turing.edu/).
+
+- **Ethan Black** ❗([Github](https://github.com/ethanrossblack), [LinkedIn](https://www.linkedin.com/in/ethanrossblack/))
+- **Chris Cullinane** ❗ ([Github](https://github.com/topher-nullset), [LinkedIn](https://www.linkedin.com/in/chris-cullinane-be/))
+- **Ian Lyell** ❗ ([Github](https://github.com/ILyell), [LinkedIn](https://www.linkedin.com/in/ian-lyell/))
+- **Connor Richmond** ❗ ([Github](https://github.com/ConnorRichmond), [LinkedIn](https://www.linkedin.com/in/corichmond/))
+- **Mike Wood** ❗ ([Github](https://github.com/MWoodshop), [LinkedIn](https://www.linkedin.com/in/michaelwilliamwood/))
+
+## Notice
+
+All clues are pulled from [jService.io](https://jservice.io/).
+
+
+[^1]: _The Jeopardy! game show and all elements thereof, including but not limited to copyright and trademark thereto, are the property of Jeopardy Productions, Inc. This application is not affiliated with, sponsored by, or operated by Jeopardy Productions, Inc._
+
