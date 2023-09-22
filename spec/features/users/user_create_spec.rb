@@ -1,14 +1,16 @@
 require "rails_helper"
 
-RSpec.describe "User create form" do
+RSpec.describe "User create form", :vcr do
   it "creates new user" do
     visit root_path
 
-    click_on "Login"
+    click_link "Login"
 
-    expect(current_path).to eq(login_path)
+    expect(current_path).to eq("/")
 
     click_on "Create Account"
+    
+    expect(current_path).to eq('/login')
 
     username = "username_test"
     email = "email_test"
@@ -19,8 +21,6 @@ RSpec.describe "User create form" do
     fill_in :user_password, with: password
 
     click_on "Create User"
-
-    # expect(current_path).to eq(root_path)
 
     # expect(page).to have_content("Hello #{user.username}!")
   end
