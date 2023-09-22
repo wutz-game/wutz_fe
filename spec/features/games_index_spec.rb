@@ -1,5 +1,5 @@
 feature 'Games Index Page', js: true do
-  scenario 'shows initial popup on page load and how to play button / popup' do
+  scenario 'shows initial popup on page load and how to play button / popup', :vcr do
     visit games_path
     expect(page).to have_css('#initialPopup', visible: true)
 
@@ -18,11 +18,7 @@ feature 'Games Index Page', js: true do
     expect(page).to have_content('Login')
   end
 
-  scenario 'lets user login' do
-    # TO DO: Add test for login
-  end
-
-  scenario 'lets user click play button to start a game' do
+  scenario 'lets user click play button to start a game', :vcr do
     visit games_path
 
     within('#initialPopup') do
@@ -32,7 +28,7 @@ feature 'Games Index Page', js: true do
     expect(page).to have_content('Total Score: 0')
   end
 
-  scenario 'lets user select a square and answer a question correctly' do
+  scenario 'lets user select a square and answer a question correctly', :vcr do
     visit games_path
 
     within('#initialPopup') do
@@ -42,12 +38,12 @@ feature 'Games Index Page', js: true do
     game_cell = find('.game-cell', match: :first)
     game_cell.click
 
-    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book')
-    fill_in 'textInput', with: 'a putting Green Eggs and Ham'
+    expect(page).to have_content('Do You Want To Know A _____ Agent Man')
+    fill_in 'textInput', with: 'Secret'
     click_button 'Submit Response'
 
-    expect(page).to have_content('Your response: a putting Green Eggs and Ham')
-    expect(page).to have_content('Correct Response: a putting Green Eggs and Ham')
+    expect(page).to have_content('Your response: Secret')
+    expect(page).to have_content('Correct Response: Secret')
 
     expect(page).to have_css('#answerPopup', visible: true)
     within('#answerPopup') do
@@ -61,7 +57,7 @@ feature 'Games Index Page', js: true do
     expect(page).to have_content('Total Score: 1')
   end
 
-  scenario 'lets user select a square and answer a question incorrectly' do
+  scenario 'lets user select a square and answer a question incorrectly', :vcr do
     visit games_path
 
     within('#initialPopup') do
@@ -71,12 +67,11 @@ feature 'Games Index Page', js: true do
     game_cell = find('.game-cell', match: :first)
     game_cell.click
 
-    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book')
     fill_in 'textInput', with: 'Wrong Answer'
     click_button 'Submit Response'
 
     expect(page).to have_content('Your response: Wrong Answer')
-    expect(page).to have_content('Correct Response: a putting Green Eggs and Ham')
+    expect(page).to have_content('Correct Response: Secret')
 
     expect(page).to have_css('#answerPopup', visible: true)
     within('#answerPopup') do
@@ -90,7 +85,7 @@ feature 'Games Index Page', js: true do
     expect(page).to have_content('Total Score: -1')
   end
 
-  scenario 'lets user select a square and click skip question' do
+  scenario 'lets user select a square and click skip question', :vcr do
     visit games_path
 
     within('#initialPopup') do
@@ -99,7 +94,6 @@ feature 'Games Index Page', js: true do
     game_cell = find('.game-cell', match: :first)
     game_cell.click
 
-    expect(page).to have_content('Golf short game practice area served up in the title of a Dr. Seuss book')
     click_button 'skipBtn'
 
     # Check that the color of the square became yellow
