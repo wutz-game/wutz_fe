@@ -11,7 +11,7 @@
     <% if session[:user_id] != nil %>
       <%= link_to 'Logout', logout_path, method: :delete %><br>
      <% else %>
-      <button class="initialBtn", id="loginBtn">Login</button><br>
+      <%= link_to 'Login', login_path %><br>
     <% end %>
     <button class="initialBtn", id="howToPlayBtn">How to Play</button>
     <br>
@@ -36,10 +36,14 @@
   <table class="table-container">
     <thead>
       <tr>
-        <% @facade.categories.each do |category| %>
-          <th class="header">
+        <% @facade.categories.each_with_index do |category, col_index| %>
+          <th class="category"
+            id="cat_<%=col_index%>"
+            data-cat-name="<%=category.name%>"
+            data-cat-emoji="<%=category.emoji%>"
+          >
             <%= category.emoji %><br>
-            <%= category.name.titleize %>
+            <%= category.name.titleize %>           
           </th>
         <% end %>
       </tr>
@@ -53,8 +57,10 @@
               id="cell_<%= row_index %>_<%= col_index %>"
               data-question="<%= question.question %>"
               data-answer="<%= question.answer %>"
+              data-question-id="<%= question.question_id %>"
+              data-question-points="<%= question.points %>"
             >
-              <%= question.points %>
+              <%=question.points%>
             </td>
           <% end %>
         </tr>
@@ -98,3 +104,4 @@
   <button id="overrideBtn" style="display:none;">I Was Close Enough</button>
   <br>
   <button id="returnToGameBtn">Return to Game Board</button>
+</div>
