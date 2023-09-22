@@ -8,6 +8,19 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
+require 'vcr'
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/vcr_cassettes'
+  config.hook_into :webmock
+  config.configure_rspec_metadata!
+
+  # Automatically filter sensitive data
+  config.filter_sensitive_data('<API_KEY>') { ENV['API_KEY'] }
+
+  # Enable new episodes to be recorded
+  config.default_cassette_options = { :record => :new_episodes }
+end
 
 require 'simplecov'
 SimpleCov.start
