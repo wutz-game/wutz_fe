@@ -19,6 +19,21 @@ RSpec.configure do |config|
   end
 end
 
+# VCR Configuration
+require 'vcr'
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/vcr_cassettes'
+  config.hook_into :webmock
+  config.configure_rspec_metadata!
+
+  # Automatically filter sensitive data
+  config.filter_sensitive_data('<API_KEY>') { ENV['API_KEY'] }
+
+  # Enable new episodes to be recorded
+  config.default_cassette_options = { record: :new_episodes }
+end
+
 # Capybara and Selenium configuration
 Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new

@@ -32,3 +32,6 @@
 
 # Ignore Simplecov stuff
 /coverage
+
+# Ignore VCR
+/spec/vcr_cassettes
