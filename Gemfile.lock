@@ -172,8 +172,13 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 66136fd (Initial commit)
 =======
+=======
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
+>>>>>>> 7552c5a (feat: POST method finish for save games)
     launchy (2.5.2)
       addressable (~> 2.8)
 >>>>>>> 75e4022 (Chore: updates gemfile.lock)
@@ -414,6 +419,7 @@ DEPENDENCIES
 >>>>>>> f9a35fc (feat: Finish API consumption from be)
   importmap-rails
   jbuilder
+  jsonapi-serializer
   launchy
   pg (~> 1.1)
   pry
