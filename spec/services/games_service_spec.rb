@@ -3,8 +3,8 @@ require "rails_helper"
 describe GamesService do
   describe "class methods" do
     describe ".get_todays_game" do
-      it "returns parsed data for the day's game" do
-        todays_game = GamesService.get_todays_game
+      it "returns parsed data for the day's game", :vcr do
+        todays_game = GamesService.new.get_daily_game
         
         expect(todays_game).to be_a Hash
         expect(todays_game).to have_key :data

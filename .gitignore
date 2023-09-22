@@ -32,3 +32,6 @@
 
 # Ignore Simplecov stuff
 /coverage
+
+# Ignore Fixtures
+spec/vcr_cassettes/*
