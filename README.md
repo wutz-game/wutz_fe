@@ -20,17 +20,17 @@ Wutz is a daily social trivia game using an API scrapping Jeopardy Productions t
 
 ## 🔗 Important Links
 
-### Back End
-
-[GitHub](https://github.com/wutz-game/wutz_be)
-
-[Heroku Deployment](https://pacific-wildwood-99462-95c6d81ab3e1.herokuapp.com/api/challenges)
-
 ### Front End
+
+[Depolyed Game: Play Wutz!](https://hidden-spire-29708-f563a2b7cacc.herokuapp.com/)
 
 [Github](https://github.com/wutz-game/wutz_fe)
 
-[Heroku Deployment](https://pacific-wildwood-99462-95c6d81ab3e1.herokuapp.com/api/challenges)
+### Back End
+
+[Deployed API](https://pacific-wildwood-99462-95c6d81ab3e1.herokuapp.com/api/challenges)
+
+[GitHub Repo](https://github.com/wutz-game/wutz_be)
 
 ## 🧑‍💻 Developed Using
 
