@@ -10,7 +10,7 @@
     <button class="initialBtn", id="playBtn">Play</button><br>
     <% if session[:user_id] != nil %>
       <%= link_to 'Logout', logout_path, method: :delete %><br>
-     <% else %>
+    <% else %>
       <button class="initialBtn", id="loginBtn">Login</button><br>
     <% end %>
     <button class="initialBtn", id="howToPlayBtn">How to Play</button>
@@ -24,12 +24,22 @@
 <!-- How to Play Overlay Popup -->
 <div id="howToPlayPopup" style="display:none;">
   <span id="howToPlayCloseBtn" style="cursor:pointer;">X</span>
-  <h2>How to Play</h2>
-  <p>Here are the instructions...</p>
-  <p>Here are the instructions...</p>
-  <p>Here are the instructions...</p>
-  <p>Here are the instructions...</p>
-  <button id="returnBtn">Return</button>
+  <div style=text-align: left>
+    <h2>How to Play</h2>
+    <p>You will receive a new game board each day</p>
+    <p>Feel free to create an account and login for more functionality and fun!</p>
+    <p>Select any box to see the answer</p>
+    <p>Harder questions are worth more points</p>
+    <p>Type your answer in the form of a question and click or tap on Submit Response</p>
+    <p>If you aren't sure, feel free to click or tap Skip Question to come back to the question later</p>
+    <p>If you got the question wrong but feel you were close enough, click or tap I Was Close Enough</p>
+    <p>Don't lie though - you'll only be cheating yourself!</p>
+    <p>Once you've completed the game, click Complete Game to see your final score</p>
+    <p>If you logged in at the beginning you can click Save Game to save your score</p>
+    <br>
+    <p>Good Luck and Have Fun!</p>
+    <button id="returnBtn">Return</button>
+  </div>
 </div>
 <!-- Game Board Popup -->
 <div class="game-grid">
