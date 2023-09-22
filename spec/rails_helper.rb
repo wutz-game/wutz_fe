@@ -19,26 +19,26 @@ RSpec.configure do |config|
   end
 end
 
-# VCR Configuration
-require 'vcr'
+# # VCR Configuration
+# require 'vcr'
 
-VCR.configure do |config|
-  config.cassette_library_dir = 'spec/vcr_cassettes'
-  config.hook_into :webmock
-  config.configure_rspec_metadata!
+# VCR.configure do |config|
+#   config.cassette_library_dir = 'spec/vcr_cassettes'
+#   config.hook_into :webmock
+#   config.configure_rspec_metadata!
 
-  # Automatically filter sensitive data
-  config.filter_sensitive_data('<API_KEY>') { ENV['API_KEY'] }
+#   # Automatically filter sensitive data
+#   config.filter_sensitive_data('<API_KEY>') { ENV['API_KEY'] }
 
-  # Enable new episodes to be recorded
-  config.default_cassette_options = { record: :new_episodes }
-end
+#   # Disable VCR
+#   config.default_cassette_options = { record: :none }
+# end
 
 # Capybara and Selenium configuration
+
 Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
 
-  options.add_argument('--headless')
   options.add_argument('--no-sandbox')
   options.add_argument('--disable-dev-shm-usage')
 
