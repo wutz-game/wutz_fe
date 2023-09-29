@@ -121,6 +121,9 @@ RSpec.configure do |config|
 
   # Have documentation formatting by default
   config.formatter = :documentation
+  config.after(:each) do
+    Capybara.current_session.driver.quit
+  end
 end
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -128,7 +131,3 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end  
-
-config.after(:each) do
-  Capybara.current_session.driver.quit
-end

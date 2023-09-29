@@ -10,9 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_051359) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_21_172849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,24 +78,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_051359) do
     t.index ["game_id"], name: "index_user_games_on_game_id"
   end
 
-  add_foreign_key "game_question_categories", "games"
-  add_foreign_key "game_question_categories", "question_categories"
-  add_foreign_key "game_questions", "games"
-  add_foreign_key "game_questions", "questions"
-  add_foreign_key "user_answers", "game_questions"
-  add_foreign_key "user_answers", "user_games"
-  add_foreign_key "user_games", "games"
-=======
-ActiveRecord::Schema[7.0].define(version: 0) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
->>>>>>> f55c641 (Chore: updates files automatically)
-=======
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_172849) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -106,5 +86,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_172849) do
     t.datetime "updated_at", null: false
   end
 
->>>>>>> d22d89d (user table)
+  add_foreign_key "game_question_categories", "games"
+  add_foreign_key "game_question_categories", "question_categories"
+  add_foreign_key "game_questions", "games"
+  add_foreign_key "game_questions", "questions"
+  add_foreign_key "user_answers", "game_questions"
+  add_foreign_key "user_answers", "user_games"
+  add_foreign_key "user_games", "games"
 end
